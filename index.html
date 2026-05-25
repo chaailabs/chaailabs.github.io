@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Chaai Labs — Accelerating Scientific Computing with AI</title>
-  <meta name="description" content="Chaai Labs builds agentic AI for HPC — your intelligent co-pilot for simulation workflows, materials research, and scientific computing.">
+  <meta name="description" content="Chaai Labs builds agentic AI for computational science — materials discovery, biological molecules, and drug design — running natively on HPC clusters.">
   <meta property="og:title" content="Chaai Labs — Accelerating Scientific Computing with AI">
   <meta property="og:description" content="Agentic AI built natively for HPC. Understands VASP, LAMMPS, DeepMD, SLURM.">
   <meta property="og:type" content="website">
@@ -419,6 +419,69 @@ section { padding: 110px 0; }
   border-color: var(--accent); color: var(--accent);
 }
 
+/* ── Applications ──────────────────────────────────────────────────────────── */
+#applications { background: var(--bg); }
+.app-head { text-align: center; margin-bottom: 64px; }
+.app-grid {
+  display: grid; grid-template-columns: repeat(3,1fr);
+  gap: 24px;
+}
+.app-card {
+  background: var(--card);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 20px; padding: 36px 30px;
+  position: relative; overflow: hidden;
+  transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+}
+.app-card::before {
+  content: ''; position: absolute;
+  top: 0; left: 0; right: 0; height: 3px;
+}
+.app-card.mat::before  { background: linear-gradient(90deg, var(--accent), var(--accent2)); }
+.app-card.bio::before  { background: linear-gradient(90deg, #00D4FF, #7B61FF); }
+.app-card.drug::before { background: linear-gradient(90deg, #FF6B9D, #FF9A3C); }
+.app-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 28px 56px rgba(0,0,0,0.35);
+}
+.app-card.mat:hover  { border-color: rgba(0,255,136,0.25); box-shadow: 0 28px 56px rgba(0,255,136,0.08); }
+.app-card.bio:hover  { border-color: rgba(0,212,255,0.25); box-shadow: 0 28px 56px rgba(0,212,255,0.08); }
+.app-card.drug:hover { border-color: rgba(255,107,157,0.25); box-shadow: 0 28px 56px rgba(255,107,157,0.08); }
+.app-icon {
+  font-size: 2.4rem; margin-bottom: 18px;
+  display: block; line-height: 1;
+}
+.app-title {
+  font-size: 1.25rem; font-weight: 800;
+  margin-bottom: 10px; letter-spacing: -0.02em;
+}
+.app-card.mat  .app-title { color: var(--accent); }
+.app-card.bio  .app-title { color: #00D4FF; }
+.app-card.drug .app-title { color: #FF6B9D; }
+.app-desc {
+  color: var(--muted); font-size: 0.88rem;
+  line-height: 1.75; margin-bottom: 22px;
+}
+.app-usecases {
+  display: flex; flex-wrap: wrap; gap: 7px;
+}
+.app-uc {
+  font-size: 0.75rem; font-weight: 500;
+  padding: 4px 10px; border-radius: 5px;
+}
+.app-card.mat  .app-uc { background: rgba(0,255,136,0.08); color: var(--accent); border: 1px solid rgba(0,255,136,0.15); }
+.app-card.bio  .app-uc { background: rgba(0,212,255,0.08); color: #00D4FF; border: 1px solid rgba(0,212,255,0.15); }
+.app-card.drug .app-uc { background: rgba(255,107,157,0.08); color: #FF9A3C; border: 1px solid rgba(255,107,157,0.15); }
+.app-divider {
+  border: none; border-top: 1px solid rgba(255,255,255,0.05);
+  margin: 20px 0;
+}
+.app-tools-label {
+  font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--subtle);
+  margin-bottom: 10px;
+}
+
 /* ── CTA ───────────────────────────────────────────────────────────────────── */
 #cta {
   text-align: center;
@@ -484,6 +547,7 @@ footer {
   .stats-row { grid-template-columns: 1fr 1fr; }
   .tech-row { grid-template-columns: repeat(3,1fr); }
   .eco-grid { grid-template-columns: 1fr 1fr; }
+  .app-grid { grid-template-columns: 1fr; }
 }
 @media (max-width: 640px) {
   .nav-links { display: none; }
@@ -492,6 +556,7 @@ footer {
   .hiw-row::before { display: none; }
   .tech-row { grid-template-columns: repeat(2,1fr); }
   .eco-grid { grid-template-columns: 1fr; }
+  .app-grid { grid-template-columns: 1fr; }
   .foot-wrap { flex-direction: column; text-align: center; }
 }
 </style>
@@ -537,9 +602,9 @@ footer {
 
     <ul class="nav-links">
       <li><a href="#about">About</a></li>
+      <li><a href="#applications">Applications</a></li>
       <li><a href="#ecosystem">Ecosystem</a></li>
       <li><a href="#features">Capabilities</a></li>
-      <li><a href="#hiw">How It Works</a></li>
       <li><a href="#team">Team</a></li>
     </ul>
 
@@ -559,9 +624,9 @@ footer {
       for <span class="g-text">Scientific HPC</span>
     </h1>
     <p class="hero-sub">
-      Chaai Labs builds agentic AI that understands your entire scientific stack —
-      DFT, MD, MLIPs, analysis, plotting, and HPC orchestration —
-      and acts as your intelligent co-pilot for computational science.
+      Chaai Labs builds agentic AI for the full breadth of computational science —
+      materials discovery, biological molecules, and drug design —
+      running natively on HPC clusters with every tool your research demands.
     </p>
     <div class="hero-btns">
       <a href="https://github.com/chaailabs" class="btn-a" target="_blank" rel="noopener">
@@ -596,6 +661,121 @@ footer {
   </div>
 </section>
 
+<!-- ── Applications ───────────────────────────────────────────────────────── -->
+<section id="applications">
+  <div class="container">
+    <div class="app-head">
+      <div class="tag r">Applications</div>
+      <h2 class="section-h r">One AI agent.<br>Three scientific frontiers.</h2>
+    </div>
+    <div class="app-grid">
+
+      <!-- Materials -->
+      <div class="app-card mat r">
+        <span class="app-icon">⚛️</span>
+        <div class="app-title">Materials Science</div>
+        <div class="app-desc">
+          Accelerate discovery of next-generation materials — from battery
+          electrolytes and catalysts to semiconductors and structural alloys.
+          Chaai reasons across DFT, MD, and ML force fields simultaneously,
+          closing the loop from atomistic simulation to property prediction.
+        </div>
+        <div class="app-usecases">
+          <span class="app-uc">Battery materials</span>
+          <span class="app-uc">Solid electrolytes</span>
+          <span class="app-uc">Catalysis</span>
+          <span class="app-uc">Thin films</span>
+          <span class="app-uc">Phase diagrams</span>
+          <span class="app-uc">Defect engineering</span>
+          <span class="app-uc">MLIP training</span>
+          <span class="app-uc">Force field benchmarking</span>
+        </div>
+        <hr class="app-divider">
+        <div class="app-tools-label">Key Tools</div>
+        <div class="app-usecases">
+          <span class="app-uc">VASP</span>
+          <span class="app-uc">LAMMPS</span>
+          <span class="app-uc">DeepMD</span>
+          <span class="app-uc">MACE</span>
+          <span class="app-uc">ALCHEMI</span>
+          <span class="app-uc">pymatgen</span>
+          <span class="app-uc">ASE</span>
+          <span class="app-uc">phonopy</span>
+        </div>
+      </div>
+
+      <!-- Bio -->
+      <div class="app-card bio r d1">
+        <span class="app-icon">🧬</span>
+        <div class="app-title">Biological Molecules</div>
+        <div class="app-desc">
+          From protein folding and membrane dynamics to enzyme catalysis and
+          nucleic acid interactions. Chaai handles the full MD pipeline —
+          system setup, long production runs, trajectory analysis, and
+          free energy calculations — across all major bio-simulation codes.
+        </div>
+        <div class="app-usecases">
+          <span class="app-uc">Protein dynamics</span>
+          <span class="app-uc">Membrane simulations</span>
+          <span class="app-uc">Free energy (FEP/MBAR)</span>
+          <span class="app-uc">Enzyme mechanisms</span>
+          <span class="app-uc">RNA / DNA folding</span>
+          <span class="app-uc">QM/MM</span>
+          <span class="app-uc">Coarse-grained MD</span>
+          <span class="app-uc">Structural biology</span>
+        </div>
+        <hr class="app-divider">
+        <div class="app-tools-label">Key Tools</div>
+        <div class="app-usecases">
+          <span class="app-uc">GROMACS</span>
+          <span class="app-uc">NAMD</span>
+          <span class="app-uc">AMBER</span>
+          <span class="app-uc">OpenMM</span>
+          <span class="app-uc">AlphaFold2</span>
+          <span class="app-uc">MDAnalysis</span>
+          <span class="app-uc">VMD</span>
+          <span class="app-uc">CHARMM</span>
+        </div>
+      </div>
+
+      <!-- Pharma -->
+      <div class="app-card drug r d2">
+        <span class="app-icon">💊</span>
+        <div class="app-title">Pharma &amp; Drug Design</div>
+        <div class="app-desc">
+          Compress the drug discovery pipeline with AI-guided virtual screening,
+          binding affinity prediction, and lead optimization. Chaai orchestrates
+          docking campaigns, interprets ADMET properties, and integrates ML
+          models directly into HPC workflows at scale.
+        </div>
+        <div class="app-usecases">
+          <span class="app-uc">Virtual screening</span>
+          <span class="app-uc">Binding affinity (RBFE/ABFE)</span>
+          <span class="app-uc">Lead optimization</span>
+          <span class="app-uc">ADMET prediction</span>
+          <span class="app-uc">QSAR modeling</span>
+          <span class="app-uc">Protein-ligand docking</span>
+          <span class="app-uc">Fragment-based design</span>
+          <span class="app-uc">Scaffold hopping</span>
+        </div>
+        <hr class="app-divider">
+        <div class="app-tools-label">Key Tools</div>
+        <div class="app-usecases">
+          <span class="app-uc">AutoDock Vina</span>
+          <span class="app-uc">RDKit</span>
+          <span class="app-uc">DeepChem</span>
+          <span class="app-uc">OpenBabel</span>
+          <span class="app-uc">Schrödinger</span>
+          <span class="app-uc">PyMOL</span>
+          <span class="app-uc">BioPython</span>
+          <span class="app-uc">ProDy</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
 <!-- ── About ──────────────────────────────────────────────────────────────── -->
 <section id="about">
   <div class="container">
@@ -609,10 +789,11 @@ footer {
         <em>real</em> simulation workflows — not generic web text.
       </p>
       <p class="body-text r">
-        It understands converged vs. failed VASP calculations, LAMMPS timestep
-        stability, MLIP accuracy benchmarks via ALCHEMI, GROMACS topology errors,
-        ASE structure manipulation, pymatgen phase diagrams, and how to navigate
-        any Slurm cluster — natively, without wrapper scripts or manual lookup.
+        From converged VASP calculations and MLIP force field benchmarks, to
+        protein MD free energy calculations and drug-target docking pipelines —
+        Chaai speaks the language of every domain. It navigates GROMACS topology
+        errors, interprets AlphaFold structures, runs AutoDock screening workflows,
+        and orchestrates any Slurm cluster, all in one agent.
       </p>
     </div>
 
@@ -774,6 +955,35 @@ footer {
           <span class="eco-tag">seekpath</span>
           <span class="eco-tag">sumo</span>
           <span class="eco-tag">vaspkit</span>
+        </div>
+      </div>
+
+      <div class="eco-cat r d3">
+        <div class="eco-cat-title">Structural Biology</div>
+        <div class="eco-tags">
+          <span class="eco-tag hi">AlphaFold2</span>
+          <span class="eco-tag">ESMFold</span>
+          <span class="eco-tag">RoseTTAFold</span>
+          <span class="eco-tag">MODELLER</span>
+          <span class="eco-tag">PyMOL</span>
+          <span class="eco-tag">UCSF ChimeraX</span>
+          <span class="eco-tag">ProDy</span>
+          <span class="eco-tag">BioPython</span>
+        </div>
+      </div>
+
+      <div class="eco-cat r d4">
+        <div class="eco-cat-title">Drug Discovery</div>
+        <div class="eco-tags">
+          <span class="eco-tag hi">AutoDock Vina</span>
+          <span class="eco-tag">RDKit</span>
+          <span class="eco-tag">DeepChem</span>
+          <span class="eco-tag">OpenBabel</span>
+          <span class="eco-tag">Schrödinger</span>
+          <span class="eco-tag">GOLD</span>
+          <span class="eco-tag">Glide</span>
+          <span class="eco-tag">FEP+</span>
+          <span class="eco-tag">CPPTRAJ</span>
         </div>
       </div>
 
