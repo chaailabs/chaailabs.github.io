@@ -508,7 +508,7 @@ footer {
 <section id="hero">
   <canvas id="canvas"></canvas>
   <div class="container hero-inner">
-    <div class="hero-pill">Now Training · Kestrel H100</div>
+    <div class="hero-pill">Now Training · NVIDIA H100</div>
     <h1 class="hero-h1">
       The AI<br>
       for <span class="g-text">Scientific HPC</span>
@@ -576,7 +576,7 @@ footer {
           <div class="p-badge">A</div>
           <div>
             <div class="p-name">Real HPC Workflows</div>
-            <div class="p-detail">VASP · LAMMPS · DeepMD · MACE · 4,200+ examples from /projects/nmclps</div>
+            <div class="p-detail">VASP · LAMMPS · DeepMD · MACE · 4,200+ real simulation examples</div>
           </div>
         </div>
         <div class="p-row">
@@ -604,7 +604,7 @@ footer {
           <div class="p-badge">★</div>
           <div>
             <div class="p-name">Chaai — Qwen2.5-Coder-32B</div>
-            <div class="p-detail">QLoRA r=64 · 4-bit NF4 · DPO-aligned · NREL H100-trained</div>
+            <div class="p-detail">QLoRA r=64 · 4-bit NF4 · DPO-aligned · NVIDIA H100-trained</div>
           </div>
         </div>
       </div>
@@ -666,7 +666,7 @@ footer {
         <div class="hiw-num">01</div>
         <div class="hiw-h">Collect &amp; Synthesize</div>
         <div class="hiw-p">Crawls real simulation directories for VASP, LAMMPS, and DeepMD workflows. NVIDIA Nemotron generates 800+ expert synthetic trajectories.</div>
-        <div class="hiw-code"><span class="dim">$</span> python collect_simulation_workflows.py<br><span class="dim">    --roots /projects/nmclps</span><br><span class="dim">→</span> 4,247 examples collected</div>
+        <div class="hiw-code"><span class="dim">$</span> python collect_simulation_workflows.py<br><span class="dim">    --roots /hpc/simulations</span><br><span class="dim">→</span> 4,247 examples collected</div>
       </div>
       <div class="hiw-step r d2">
         <div class="hiw-num">02</div>
@@ -677,7 +677,7 @@ footer {
       <div class="hiw-step r d4">
         <div class="hiw-num">03</div>
         <div class="hiw-h">Train &amp; Deploy</div>
-        <div class="hiw-p">QLoRA SFT on Qwen2.5-Coder-32B, then DPO alignment on an NREL H100. Lightweight LoRA adapter — no full model retraining required.</div>
+        <div class="hiw-p">QLoRA SFT on Qwen2.5-Coder-32B, then DPO alignment on an NVIDIA H100. Lightweight LoRA adapter — no full model retraining required.</div>
         <div class="hiw-code"><span class="dim">$</span> torchrun train_qwen.py<br><span class="dim">    --model Qwen2.5-Coder-32B</span><br><span class="dim">    --lora-r 64 --epochs 3</span></div>
       </div>
     </div>
@@ -730,16 +730,16 @@ footer {
     </div>
     <div class="team-row">
       <div class="team-card r">
-        <div class="team-av">S</div>
-        <div class="team-n">Selva</div>
+        <div class="team-av">C</div>
+        <div class="team-n">Chaai Labs</div>
         <div class="team-r">Founder</div>
         <div class="team-bio">
-          Computational scientist specializing in HPC automation, ML force fields,
-          and agentic AI systems for materials research. Building the bridge between
-          large language models and high-performance scientific computing.
+          A team of computational scientists and AI engineers building the next
+          generation of intelligent tools for high-performance scientific computing,
+          powered by NVIDIA hardware and open-source AI.
         </div>
         <div class="team-socials">
-          <a href="https://linkedin.com/in/" class="team-s" title="LinkedIn" target="_blank" rel="noopener">in</a>
+          <a href="https://linkedin.com/company/chaailabs" class="team-s" title="LinkedIn" target="_blank" rel="noopener">in</a>
           <a href="https://github.com/chaailabs" class="team-s" title="GitHub" target="_blank" rel="noopener">gh</a>
           <a href="mailto:chaaifoundation@gmail.com" class="team-s" title="Email">@</a>
         </div>
