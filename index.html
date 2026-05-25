@@ -240,8 +240,50 @@ section { padding: 110px 0; }
 .p-name { color: var(--text); font-weight: 600; font-size: 0.85rem; margin-bottom: 2px; }
 .p-detail { color: var(--muted); font-size: 0.74rem; line-height: 1.5; }
 
-/* ── Features ──────────────────────────────────────────────────────────────── */
-#features { background: var(--bg2); }
+/* ── Ecosystem ─────────────────────────────────────────────────────────────── */
+#ecosystem { background: var(--bg2); }
+.eco-head { text-align: center; margin-bottom: 56px; }
+.eco-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.eco-cat {
+  background: var(--card);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: var(--radius); padding: 24px;
+  transition: border-color 0.2s, transform 0.2s;
+}
+.eco-cat:hover { border-color: var(--border); transform: translateY(-2px); }
+.eco-cat-title {
+  font-size: 0.72rem; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 16px;
+  display: flex; align-items: center; gap: 8px;
+}
+.eco-cat-title::after {
+  content: ''; flex: 1; height: 1px;
+  background: linear-gradient(90deg, var(--border), transparent);
+}
+.eco-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.eco-tag {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  color: var(--text); font-size: 0.78rem; font-weight: 500;
+  padding: 5px 12px; border-radius: 6px;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+}
+.eco-tag:hover {
+  background: rgba(0,255,136,0.08);
+  border-color: var(--border); color: var(--accent);
+}
+.eco-tag.hi {
+  background: rgba(0,255,136,0.08);
+  border-color: rgba(0,255,136,0.25);
+  color: var(--accent);
+}
+
+/* ── Features ─────────────────────────────────────────────────────────────── */
+#features { background: var(--bg); }
 .sec-head { text-align: center; margin-bottom: 64px; }
 .sec-head .section-h { margin-top: 6px; }
 
@@ -441,6 +483,7 @@ footer {
   .feat-grid { grid-template-columns: 1fr 1fr; }
   .stats-row { grid-template-columns: 1fr 1fr; }
   .tech-row { grid-template-columns: repeat(3,1fr); }
+  .eco-grid { grid-template-columns: 1fr 1fr; }
 }
 @media (max-width: 640px) {
   .nav-links { display: none; }
@@ -448,6 +491,7 @@ footer {
   .hiw-row { grid-template-columns: 1fr; }
   .hiw-row::before { display: none; }
   .tech-row { grid-template-columns: repeat(2,1fr); }
+  .eco-grid { grid-template-columns: 1fr; }
   .foot-wrap { flex-direction: column; text-align: center; }
 }
 </style>
@@ -493,6 +537,7 @@ footer {
 
     <ul class="nav-links">
       <li><a href="#about">About</a></li>
+      <li><a href="#ecosystem">Ecosystem</a></li>
       <li><a href="#features">Capabilities</a></li>
       <li><a href="#hiw">How It Works</a></li>
       <li><a href="#team">Team</a></li>
@@ -514,9 +559,9 @@ footer {
       for <span class="g-text">Scientific HPC</span>
     </h1>
     <p class="hero-sub">
-      Chaai Labs builds agentic AI that understands your full simulation stack —
-      VASP, LAMMPS, DeepMD, SLURM — and acts as your intelligent co-pilot
-      for computational science on HPC clusters.
+      Chaai Labs builds agentic AI that understands your entire scientific stack —
+      DFT, MD, MLIPs, analysis, plotting, and HPC orchestration —
+      and acts as your intelligent co-pilot for computational science.
     </p>
     <div class="hero-btns">
       <a href="https://github.com/chaailabs" class="btn-a" target="_blank" rel="noopener">
@@ -564,9 +609,10 @@ footer {
         <em>real</em> simulation workflows — not generic web text.
       </p>
       <p class="body-text r">
-        It understands the difference between a converged VASP calculation and a
-        failed one, how to tune LAMMPS timesteps, how to evaluate ML force
-        field accuracy, and how to navigate a Slurm cluster — natively.
+        It understands converged vs. failed VASP calculations, LAMMPS timestep
+        stability, MLIP accuracy benchmarks via ALCHEMI, GROMACS topology errors,
+        ASE structure manipulation, pymatgen phase diagrams, and how to navigate
+        any Slurm cluster — natively, without wrapper scripts or manual lookup.
       </p>
     </div>
 
@@ -576,7 +622,7 @@ footer {
           <div class="p-badge">A</div>
           <div>
             <div class="p-name">Real HPC Workflows</div>
-            <div class="p-detail">VASP · LAMMPS · DeepMD · MACE · 4,200+ real simulation examples</div>
+            <div class="p-detail">VASP · LAMMPS · GROMACS · DeepMD · MACE · ASE · 4,200+ real examples</div>
           </div>
         </div>
         <div class="p-row">
@@ -608,6 +654,143 @@ footer {
           </div>
         </div>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Ecosystem ──────────────────────────────────────────────────────────── -->
+<section id="ecosystem">
+  <div class="container">
+    <div class="eco-head">
+      <div class="tag r">Full Ecosystem Support</div>
+      <h2 class="section-h r">Every tool in your stack,<br>understood natively</h2>
+    </div>
+    <div class="eco-grid">
+
+      <div class="eco-cat r">
+        <div class="eco-cat-title">Ab Initio &amp; DFT</div>
+        <div class="eco-tags">
+          <span class="eco-tag hi">VASP</span>
+          <span class="eco-tag">Quantum ESPRESSO</span>
+          <span class="eco-tag">CP2K</span>
+          <span class="eco-tag">ABINIT</span>
+          <span class="eco-tag">GPAW</span>
+          <span class="eco-tag">NWChem</span>
+          <span class="eco-tag">ORCA</span>
+          <span class="eco-tag">Gaussian</span>
+        </div>
+      </div>
+
+      <div class="eco-cat r d1">
+        <div class="eco-cat-title">Molecular Dynamics</div>
+        <div class="eco-tags">
+          <span class="eco-tag hi">LAMMPS</span>
+          <span class="eco-tag hi">GROMACS</span>
+          <span class="eco-tag">NAMD</span>
+          <span class="eco-tag">OpenMM</span>
+          <span class="eco-tag">AMBER</span>
+          <span class="eco-tag">CHARMM</span>
+          <span class="eco-tag">CPMD</span>
+        </div>
+      </div>
+
+      <div class="eco-cat r d2">
+        <div class="eco-cat-title">ML Force Fields (MLIPs)</div>
+        <div class="eco-tags">
+          <span class="eco-tag hi">DeepMD-kit</span>
+          <span class="eco-tag hi">MACE</span>
+          <span class="eco-tag">NequIP</span>
+          <span class="eco-tag">CHGNet</span>
+          <span class="eco-tag">M3GNet</span>
+          <span class="eco-tag">Allegro</span>
+          <span class="eco-tag">FLARE</span>
+          <span class="eco-tag">ACE</span>
+          <span class="eco-tag">GAP</span>
+          <span class="eco-tag">ANI</span>
+        </div>
+      </div>
+
+      <div class="eco-cat r d1">
+        <div class="eco-cat-title">Benchmarking</div>
+        <div class="eco-tags">
+          <span class="eco-tag hi">ALCHEMI</span>
+          <span class="eco-tag">JARVIS-Tools</span>
+          <span class="eco-tag">MatBench</span>
+          <span class="eco-tag">AiiDA</span>
+          <span class="eco-tag">Atomate2</span>
+        </div>
+      </div>
+
+      <div class="eco-cat r d2">
+        <div class="eco-cat-title">Analysis &amp; Python</div>
+        <div class="eco-tags">
+          <span class="eco-tag hi">ASE</span>
+          <span class="eco-tag hi">pymatgen</span>
+          <span class="eco-tag">MDAnalysis</span>
+          <span class="eco-tag">MDTraj</span>
+          <span class="eco-tag">NumPy</span>
+          <span class="eco-tag">SciPy</span>
+          <span class="eco-tag">pandas</span>
+          <span class="eco-tag">h5py</span>
+          <span class="eco-tag">phonopy</span>
+        </div>
+      </div>
+
+      <div class="eco-cat r d3">
+        <div class="eco-cat-title">Plotting &amp; Visualization</div>
+        <div class="eco-tags">
+          <span class="eco-tag hi">matplotlib</span>
+          <span class="eco-tag">plotly</span>
+          <span class="eco-tag">seaborn</span>
+          <span class="eco-tag">OVITO</span>
+          <span class="eco-tag">VESTA</span>
+          <span class="eco-tag">VMD</span>
+          <span class="eco-tag">py3Dmol</span>
+          <span class="eco-tag">ase.visualize</span>
+        </div>
+      </div>
+
+      <div class="eco-cat r d2">
+        <div class="eco-cat-title">HPC &amp; Workflow</div>
+        <div class="eco-tags">
+          <span class="eco-tag hi">SLURM</span>
+          <span class="eco-tag">PBS/Torque</span>
+          <span class="eco-tag">MPI</span>
+          <span class="eco-tag">OpenMP</span>
+          <span class="eco-tag">Singularity</span>
+          <span class="eco-tag">Conda</span>
+          <span class="eco-tag">Snakemake</span>
+          <span class="eco-tag">Nextflow</span>
+        </div>
+      </div>
+
+      <div class="eco-cat r d3">
+        <div class="eco-cat-title">Structure &amp; Thermodynamics</div>
+        <div class="eco-tags">
+          <span class="eco-tag">pymatgen</span>
+          <span class="eco-tag">spglib</span>
+          <span class="eco-tag">phonopy</span>
+          <span class="eco-tag">phono3py</span>
+          <span class="eco-tag">seekpath</span>
+          <span class="eco-tag">sumo</span>
+          <span class="eco-tag">vaspkit</span>
+        </div>
+      </div>
+
+      <div class="eco-cat r d4">
+        <div class="eco-cat-title">AI &amp; Training Stack</div>
+        <div class="eco-tags">
+          <span class="eco-tag hi">NVIDIA Nemotron</span>
+          <span class="eco-tag hi">NeMo Curator</span>
+          <span class="eco-tag">PyTorch</span>
+          <span class="eco-tag">Hugging Face</span>
+          <span class="eco-tag">PEFT / LoRA</span>
+          <span class="eco-tag">TRL / DPO</span>
+          <span class="eco-tag">vLLM</span>
+          <span class="eco-tag">bitsandbytes</span>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
