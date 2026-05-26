@@ -575,27 +575,45 @@ footer {
             <feGaussianBlur stdDeviation="1.5" result="b"/>
             <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
           </filter>
+          <filter id="ng2">
+            <feGaussianBlur stdDeviation="2.5" result="b"/>
+            <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
         </defs>
-        <g stroke="#00FF88" stroke-width="1.1" opacity="0.38">
+        <!-- C-spine (thicker) -->
+        <g stroke="#00FF88" stroke-width="1.8" opacity="0.6">
           <line x1="38" y1="6"  x2="24" y2="4"/>
           <line x1="24" y1="4"  x2="11" y2="12"/>
           <line x1="11" y1="12" x2="6"  y2="22"/>
           <line x1="6"  y1="22" x2="11" y2="32"/>
           <line x1="11" y1="32" x2="24" y2="40"/>
           <line x1="24" y1="40" x2="38" y2="38"/>
+        </g>
+        <!-- Cross-links (subtle) -->
+        <g stroke="#00FF88" stroke-width="0.7" opacity="0.18">
           <line x1="38" y1="6"  x2="11" y2="12"/>
           <line x1="24" y1="4"  x2="6"  y2="22"/>
           <line x1="11" y1="12" x2="11" y2="32"/>
           <line x1="6"  y1="22" x2="24" y2="40"/>
         </g>
+        <!-- Traveling particle along C-spine -->
+        <path id="csp" d="M38,6 L24,4 L11,12 L6,22 L11,32 L24,40 L38,38" fill="none"/>
+        <circle r="2.2" fill="#00FF88" filter="url(#ng2)">
+          <animateMotion dur="2.6s" repeatCount="indefinite"><mpath href="#csp"/></animateMotion>
+          <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.06;0.88;1" dur="2.6s" repeatCount="indefinite"/>
+        </circle>
+        <!-- Nodes with staggered pulse -->
         <g filter="url(#ng)">
-          <circle cx="38" cy="6"  r="3.2" fill="#00FF88"/>
-          <circle cx="24" cy="4"  r="2.8" fill="#00FF88"/>
-          <circle cx="11" cy="12" r="2.8" fill="#00FF88"/>
-          <circle cx="6"  cy="22" r="3.5" fill="#00FF88"/>
-          <circle cx="11" cy="32" r="2.8" fill="#00FF88"/>
-          <circle cx="24" cy="40" r="2.8" fill="#00FF88"/>
-          <circle cx="38" cy="38" r="3.2" fill="#00FF88"/>
+          <circle cx="38" cy="6"  r="3.2" fill="#00FF88"><animate attributeName="opacity" values="1;0.35;1" dur="3.2s" begin="0s"    repeatCount="indefinite"/></circle>
+          <circle cx="24" cy="4"  r="2.8" fill="#00FF88"><animate attributeName="opacity" values="1;0.35;1" dur="3.2s" begin="0.45s"  repeatCount="indefinite"/></circle>
+          <circle cx="11" cy="12" r="2.8" fill="#00FF88"><animate attributeName="opacity" values="1;0.35;1" dur="3.2s" begin="0.9s"   repeatCount="indefinite"/></circle>
+          <circle cx="6"  cy="22" r="3.5" fill="#00FF88">
+            <animate attributeName="r"       values="3.5;4.6;3.5" dur="2.2s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="1;0.5;1"     dur="2.2s" repeatCount="indefinite"/>
+          </circle>
+          <circle cx="11" cy="32" r="2.8" fill="#00FF88"><animate attributeName="opacity" values="1;0.35;1" dur="3.2s" begin="1.8s"   repeatCount="indefinite"/></circle>
+          <circle cx="24" cy="40" r="2.8" fill="#00FF88"><animate attributeName="opacity" values="1;0.35;1" dur="3.2s" begin="2.25s"  repeatCount="indefinite"/></circle>
+          <circle cx="38" cy="38" r="3.2" fill="#00FF88"><animate attributeName="opacity" values="1;0.35;1" dur="3.2s" begin="2.7s"   repeatCount="indefinite"/></circle>
         </g>
       </svg>
       <span class="brand-name">Chaai<em>Labs</em></span>
@@ -1351,20 +1369,32 @@ footer {
   <div class="container foot-wrap">
     <a href="#" class="foot-brand">
       <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <defs><filter id="fg"><feGaussianBlur stdDeviation="1.2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
-        <g stroke="#00FF88" stroke-width="1" opacity="0.35">
+        <defs>
+          <filter id="fg"><feGaussianBlur stdDeviation="1.2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+          <filter id="fg2"><feGaussianBlur stdDeviation="2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        </defs>
+        <g stroke="#00FF88" stroke-width="1.8" opacity="0.55">
           <line x1="38" y1="6" x2="24" y2="4"/><line x1="24" y1="4" x2="11" y2="12"/>
           <line x1="11" y1="12" x2="6" y2="22"/><line x1="6" y1="22" x2="11" y2="32"/>
           <line x1="11" y1="32" x2="24" y2="40"/><line x1="24" y1="40" x2="38" y2="38"/>
         </g>
+        <g stroke="#00FF88" stroke-width="0.6" opacity="0.15">
+          <line x1="38" y1="6" x2="11" y2="12"/><line x1="24" y1="4" x2="6" y2="22"/>
+          <line x1="11" y1="12" x2="11" y2="32"/><line x1="6" y1="22" x2="24" y2="40"/>
+        </g>
+        <path id="fsp" d="M38,6 L24,4 L11,12 L6,22 L11,32 L24,40 L38,38" fill="none"/>
+        <circle r="1.8" fill="#00FF88" filter="url(#fg2)">
+          <animateMotion dur="2.6s" repeatCount="indefinite"><mpath href="#fsp"/></animateMotion>
+          <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.06;0.88;1" dur="2.6s" repeatCount="indefinite"/>
+        </circle>
         <g filter="url(#fg)">
-          <circle cx="38" cy="6"  r="3"   fill="#00FF88"/>
-          <circle cx="24" cy="4"  r="2.6" fill="#00FF88"/>
-          <circle cx="11" cy="12" r="2.6" fill="#00FF88"/>
-          <circle cx="6"  cy="22" r="3.2" fill="#00FF88"/>
-          <circle cx="11" cy="32" r="2.6" fill="#00FF88"/>
-          <circle cx="24" cy="40" r="2.6" fill="#00FF88"/>
-          <circle cx="38" cy="38" r="3"   fill="#00FF88"/>
+          <circle cx="38" cy="6"  r="3"   fill="#00FF88"><animate attributeName="opacity" values="1;0.35;1" dur="3.2s" begin="0s"   repeatCount="indefinite"/></circle>
+          <circle cx="24" cy="4"  r="2.6" fill="#00FF88"><animate attributeName="opacity" values="1;0.35;1" dur="3.2s" begin="0.45s" repeatCount="indefinite"/></circle>
+          <circle cx="11" cy="12" r="2.6" fill="#00FF88"><animate attributeName="opacity" values="1;0.35;1" dur="3.2s" begin="0.9s"  repeatCount="indefinite"/></circle>
+          <circle cx="6"  cy="22" r="3.2" fill="#00FF88"><animate attributeName="r" values="3.2;4.2;3.2" dur="2.2s" repeatCount="indefinite"/></circle>
+          <circle cx="11" cy="32" r="2.6" fill="#00FF88"><animate attributeName="opacity" values="1;0.35;1" dur="3.2s" begin="1.8s"  repeatCount="indefinite"/></circle>
+          <circle cx="24" cy="40" r="2.6" fill="#00FF88"><animate attributeName="opacity" values="1;0.35;1" dur="3.2s" begin="2.25s" repeatCount="indefinite"/></circle>
+          <circle cx="38" cy="38" r="3"   fill="#00FF88"><animate attributeName="opacity" values="1;0.35;1" dur="3.2s" begin="2.7s"  repeatCount="indefinite"/></circle>
         </g>
       </svg>
       <span class="foot-name">Chaai<em>Labs</em></span>
