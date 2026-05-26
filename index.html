@@ -419,68 +419,69 @@ section { padding: 110px 0; }
   border-color: var(--accent); color: var(--accent);
 }
 
-/* ── Applications ──────────────────────────────────────────────────────────── */
-#applications { background: var(--bg); }
-.app-head { text-align: center; margin-bottom: 64px; }
-.app-grid {
-  display: grid; grid-template-columns: repeat(3,1fr);
-  gap: 24px;
-}
-.app-card {
+/* ── Use Cases ─────────────────────────────────────────────────────────────── */
+#usecases { background: var(--bg); overflow: hidden; }
+.uc-head { text-align: center; margin-bottom: 52px; }
+.uc-diagram { display: flex; justify-content: center; margin-bottom: 72px; position: relative; }
+.uc-diagram svg { width: 100%; max-width: 940px; height: auto; }
+
+/* SVG animated elements */
+@keyframes beam-flow  { from { stroke-dashoffset: 24; } to { stroke-dashoffset: 0; } }
+@keyframes node-pulse { 0%,100% { opacity:.18; } 50% { opacity:.07; } }
+@keyframes center-glow{ 0%,100% { opacity:.22; r:92; } 50% { opacity:.08; r:104; } }
+@keyframes pt-mat  { 0% { offset-distance:0%   } 100% { offset-distance:100% } }
+@keyframes spin-orbit { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+/* Domain detail cards */
+.uc-cards { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
+.uc-card {
   background: var(--card);
   border: 1px solid rgba(255,255,255,0.06);
-  border-radius: 20px; padding: 36px 30px;
+  border-radius: 20px; padding: 36px 28px;
   position: relative; overflow: hidden;
   transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
 }
-.app-card::before {
+.uc-card::before {
   content: ''; position: absolute;
   top: 0; left: 0; right: 0; height: 3px;
 }
-.app-card.mat::before  { background: linear-gradient(90deg, var(--accent), var(--accent2)); }
-.app-card.bio::before  { background: linear-gradient(90deg, #00D4FF, #7B61FF); }
-.app-card.drug::before { background: linear-gradient(90deg, #FF6B9D, #FF9A3C); }
-.app-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 28px 56px rgba(0,0,0,0.35);
+.uc-card.mat::before  { background: linear-gradient(90deg, var(--accent), var(--accent2)); }
+.uc-card.bio::before  { background: linear-gradient(90deg, #00D4FF, #7B61FF); }
+.uc-card.drug::before { background: linear-gradient(90deg, #FF6B9D, #FF9A3C); }
+.uc-card:hover { transform: translateY(-6px); box-shadow: 0 28px 56px rgba(0,0,0,0.35); }
+.uc-card.mat:hover  { border-color: rgba(0,255,136,0.25); }
+.uc-card.bio:hover  { border-color: rgba(0,212,255,0.25); }
+.uc-card.drug:hover { border-color: rgba(255,107,157,0.25); }
+.uc-ico { font-size: 2.6rem; margin-bottom: 18px; display: block; line-height: 1; }
+.uc-title { font-size: 1.22rem; font-weight: 800; margin-bottom: 12px; letter-spacing: -0.02em; }
+.uc-card.mat .uc-title  { color: var(--accent); }
+.uc-card.bio .uc-title  { color: #00D4FF; }
+.uc-card.drug .uc-title { color: #FF6B9D; }
+.uc-desc { color: var(--muted); font-size: 0.87rem; line-height: 1.78; margin-bottom: 20px; }
+.uc-list { list-style: none; margin-bottom: 22px; display: flex; flex-direction: column; gap: 7px; }
+.uc-list li { display: flex; align-items: flex-start; gap: 8px; font-size: 0.84rem; color: var(--muted); }
+.uc-list li::before { content: '→'; flex-shrink: 0; font-weight: 700; }
+.uc-card.mat  .uc-list li::before { color: var(--accent); }
+.uc-card.bio  .uc-list li::before { color: #00D4FF; }
+.uc-card.drug .uc-list li::before { color: #FF6B9D; }
+.uc-sep { border: none; border-top: 1px solid rgba(255,255,255,0.05); margin: 20px 0; }
+.uc-tools-lbl { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--subtle); margin-bottom: 10px; }
+.uc-tools { display: flex; flex-wrap: wrap; gap: 7px; }
+.uc-tool { font-size: 0.74rem; font-weight: 500; padding: 4px 10px; border-radius: 5px; }
+.uc-card.mat  .uc-tool { background: rgba(0,255,136,0.07);  color: var(--accent); border: 1px solid rgba(0,255,136,0.2); }
+.uc-card.bio  .uc-tool { background: rgba(0,212,255,0.07);  color: #00D4FF; border: 1px solid rgba(0,212,255,0.2); }
+.uc-card.drug .uc-tool { background: rgba(255,107,157,0.07); color: #FF9A3C; border: 1px solid rgba(255,107,157,0.2); }
+.uc-terminal {
+  margin-top: 20px; padding: 14px 16px;
+  background: rgba(0,0,0,0.35);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 9px;
+  font-family: 'JetBrains Mono', monospace; font-size: 0.7rem;
+  line-height: 1.6; color: var(--muted);
 }
-.app-card.mat:hover  { border-color: rgba(0,255,136,0.25); box-shadow: 0 28px 56px rgba(0,255,136,0.08); }
-.app-card.bio:hover  { border-color: rgba(0,212,255,0.25); box-shadow: 0 28px 56px rgba(0,212,255,0.08); }
-.app-card.drug:hover { border-color: rgba(255,107,157,0.25); box-shadow: 0 28px 56px rgba(255,107,157,0.08); }
-.app-icon {
-  font-size: 2.4rem; margin-bottom: 18px;
-  display: block; line-height: 1;
-}
-.app-title {
-  font-size: 1.25rem; font-weight: 800;
-  margin-bottom: 10px; letter-spacing: -0.02em;
-}
-.app-card.mat  .app-title { color: var(--accent); }
-.app-card.bio  .app-title { color: #00D4FF; }
-.app-card.drug .app-title { color: #FF6B9D; }
-.app-desc {
-  color: var(--muted); font-size: 0.88rem;
-  line-height: 1.75; margin-bottom: 22px;
-}
-.app-usecases {
-  display: flex; flex-wrap: wrap; gap: 7px;
-}
-.app-uc {
-  font-size: 0.75rem; font-weight: 500;
-  padding: 4px 10px; border-radius: 5px;
-}
-.app-card.mat  .app-uc { background: rgba(0,255,136,0.08); color: var(--accent); border: 1px solid rgba(0,255,136,0.15); }
-.app-card.bio  .app-uc { background: rgba(0,212,255,0.08); color: #00D4FF; border: 1px solid rgba(0,212,255,0.15); }
-.app-card.drug .app-uc { background: rgba(255,107,157,0.08); color: #FF9A3C; border: 1px solid rgba(255,107,157,0.15); }
-.app-divider {
-  border: none; border-top: 1px solid rgba(255,255,255,0.05);
-  margin: 20px 0;
-}
-.app-tools-label {
-  font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em;
-  text-transform: uppercase; color: var(--subtle);
-  margin-bottom: 10px;
-}
+.uc-terminal .prompt { color: var(--accent); }
+.uc-card.bio  .uc-terminal .prompt { color: #00D4FF; }
+.uc-card.drug .uc-terminal .prompt { color: #FF6B9D; }
 
 /* ── CTA ───────────────────────────────────────────────────────────────────── */
 #cta {
@@ -547,7 +548,7 @@ footer {
   .stats-row { grid-template-columns: 1fr 1fr; }
   .tech-row { grid-template-columns: repeat(3,1fr); }
   .eco-grid { grid-template-columns: 1fr 1fr; }
-  .app-grid { grid-template-columns: 1fr; }
+  .uc-cards { grid-template-columns: 1fr; }
 }
 @media (max-width: 640px) {
   .nav-links { display: none; }
@@ -556,7 +557,7 @@ footer {
   .hiw-row::before { display: none; }
   .tech-row { grid-template-columns: repeat(2,1fr); }
   .eco-grid { grid-template-columns: 1fr; }
-  .app-grid { grid-template-columns: 1fr; }
+  .uc-cards { grid-template-columns: 1fr; }
   .foot-wrap { flex-direction: column; text-align: center; }
 }
 </style>
@@ -602,7 +603,7 @@ footer {
 
     <ul class="nav-links">
       <li><a href="#about">About</a></li>
-      <li><a href="#applications">Applications</a></li>
+      <li><a href="#usecases">Use Cases</a></li>
       <li><a href="#ecosystem">Ecosystem</a></li>
       <li><a href="#features">Capabilities</a></li>
       <li><a href="#team">Team</a></li>
@@ -661,114 +662,295 @@ footer {
   </div>
 </section>
 
-<!-- ── Applications ───────────────────────────────────────────────────────── -->
-<section id="applications">
+<!-- ── Use Cases ───────────────────────────────────────────────────────────── -->
+<section id="usecases">
   <div class="container">
-    <div class="app-head">
-      <div class="tag r">Applications</div>
-      <h2 class="section-h r">One AI agent.<br>Three scientific frontiers.</h2>
+    <div class="uc-head">
+      <div class="tag r">Use Cases</div>
+      <h2 class="section-h r">One platform.<br><span class="g-text">Three scientific frontiers.</span></h2>
     </div>
-    <div class="app-grid">
+
+    <!-- ── Hub-and-spoke illustration ──────────────────────────── -->
+    <div class="uc-diagram r">
+      <svg viewBox="0 0 920 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <!-- Glow filters -->
+          <filter id="glow-c" x="-60%" y="-60%" width="220%" height="220%">
+            <feGaussianBlur stdDeviation="10" result="b"/>
+            <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <filter id="glow-m" x="-60%" y="-60%" width="220%" height="220%">
+            <feGaussianBlur stdDeviation="8" result="b"/>
+            <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <filter id="glow-s" x="-40%" y="-40%" width="180%" height="180%">
+            <feGaussianBlur stdDeviation="4" result="b"/>
+            <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <!-- Path IDs for animateMotion -->
+          <path id="pm" d="M460,192 L460,132"/>
+          <path id="pb" d="M388,297 L212,382"/>
+          <path id="pd" d="M512,297 L706,382"/>
+        </defs>
+
+        <!-- Subtle background radial -->
+        <radialGradient id="bg-grd" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#00FF88" stop-opacity="0.04"/>
+          <stop offset="100%" stop-color="#00FF88" stop-opacity="0"/>
+        </radialGradient>
+        <ellipse cx="460" cy="250" rx="380" ry="230" fill="url(#bg-grd)"/>
+
+        <!-- ── Connection beams ────────────────── -->
+        <!-- To Materials -->
+        <line x1="460" y1="192" x2="460" y2="132"
+              stroke="#00FF88" stroke-width="1.5"
+              stroke-dasharray="6 4"
+              style="animation: beam-flow 1.4s linear infinite;"/>
+        <line x1="460" y1="192" x2="460" y2="132"
+              stroke="#00FF88" stroke-width="4" opacity="0.06"/>
+
+        <!-- To Bio -->
+        <line x1="388" y1="297" x2="212" y2="382"
+              stroke="#00D4FF" stroke-width="1.5"
+              stroke-dasharray="6 4"
+              style="animation: beam-flow 1.7s linear infinite;"/>
+        <line x1="388" y1="297" x2="212" y2="382"
+              stroke="#00D4FF" stroke-width="4" opacity="0.06"/>
+
+        <!-- To Pharma -->
+        <line x1="512" y1="297" x2="706" y2="382"
+              stroke="#FF6B9D" stroke-width="1.5"
+              stroke-dasharray="6 4"
+              style="animation: beam-flow 1.6s linear infinite 0.3s;"/>
+        <line x1="512" y1="297" x2="706" y2="382"
+              stroke="#FF6B9D" stroke-width="4" opacity="0.06"/>
+
+        <!-- Moving particles on beams -->
+        <circle r="4" fill="#00FF88" filter="url(#glow-s)">
+          <animateMotion dur="1.4s" repeatCount="indefinite" keyTimes="0;1" keySplines="0.4 0 0.6 1" calcMode="spline">
+            <mpath href="#pm"/>
+          </animateMotion>
+        </circle>
+        <circle r="3" fill="#00FF88" opacity="0.6">
+          <animateMotion dur="1.4s" begin="0.5s" repeatCount="indefinite">
+            <mpath href="#pm"/>
+          </animateMotion>
+        </circle>
+
+        <circle r="4" fill="#00D4FF" filter="url(#glow-s)">
+          <animateMotion dur="1.7s" repeatCount="indefinite">
+            <mpath href="#pb"/>
+          </animateMotion>
+        </circle>
+        <circle r="3" fill="#00D4FF" opacity="0.6">
+          <animateMotion dur="1.7s" begin="0.7s" repeatCount="indefinite">
+            <mpath href="#pb"/>
+          </animateMotion>
+        </circle>
+
+        <circle r="4" fill="#FF6B9D" filter="url(#glow-s)">
+          <animateMotion dur="1.6s" repeatCount="indefinite">
+            <mpath href="#pd"/>
+          </animateMotion>
+        </circle>
+        <circle r="3" fill="#FF6B9D" opacity="0.6">
+          <animateMotion dur="1.6s" begin="0.6s" repeatCount="indefinite">
+            <mpath href="#pd"/>
+          </animateMotion>
+        </circle>
+
+        <!-- ── Center Hub — Chaai Labs ─────────── -->
+        <!-- Outer pulse rings -->
+        <circle cx="460" cy="250" r="105" stroke="#00FF88" stroke-width="0.5" opacity="0.1">
+          <animate attributeName="r" values="98;112;98" dur="3s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.12;0.04;0.12" dur="3s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="460" cy="250" r="88" stroke="#00FF88" stroke-width="0.8" opacity="0.15">
+          <animate attributeName="r" values="84;94;84" dur="2.4s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.18;0.06;0.18" dur="2.4s" repeatCount="indefinite"/>
+        </circle>
+        <!-- Main circle -->
+        <circle cx="460" cy="250" r="72" fill="#0A0E1A" stroke="#00FF88" stroke-width="1.8" filter="url(#glow-c)"/>
+        <circle cx="460" cy="250" r="72" fill="rgba(0,255,136,0.05)"/>
+        <!-- Node-network logo (C-shape) inside center -->
+        <g transform="translate(432,224)">
+          <g stroke="#00FF88" stroke-width="1" opacity="0.45">
+            <line x1="28" y1="3"  x2="17" y2="2"/>
+            <line x1="17" y1="2"  x2="7"  y2="8"/>
+            <line x1="7"  y1="8"  x2="4"  y2="16"/>
+            <line x1="4"  y1="16" x2="7"  y2="24"/>
+            <line x1="7"  y1="24" x2="17" y2="29"/>
+            <line x1="17" y1="29" x2="28" y2="28"/>
+            <line x1="28" y1="3"  x2="7"  y2="8"/>
+            <line x1="17" y1="2"  x2="4"  y2="16"/>
+            <line x1="7"  y1="8"  x2="7"  y2="24"/>
+            <line x1="4"  y1="16" x2="17" y2="29"/>
+          </g>
+          <g filter="url(#glow-s)">
+            <circle cx="28" cy="3"  r="2.2" fill="#00FF88"/>
+            <circle cx="17" cy="2"  r="2"   fill="#00FF88"/>
+            <circle cx="7"  cy="8"  r="2"   fill="#00FF88"/>
+            <circle cx="4"  cy="16" r="2.5" fill="#00FF88"/>
+            <circle cx="7"  cy="24" r="2"   fill="#00FF88"/>
+            <circle cx="17" cy="29" r="2"   fill="#00FF88"/>
+            <circle cx="28" cy="28" r="2.2" fill="#00FF88"/>
+          </g>
+        </g>
+        <!-- "Chaai Labs" text -->
+        <text x="460" y="268" text-anchor="middle"
+              font-family="Inter,sans-serif" font-size="11" font-weight="800"
+              letter-spacing="0.5" fill="#E8F4FD">CHAAI</text>
+        <text x="460" y="280" text-anchor="middle"
+              font-family="Inter,sans-serif" font-size="9" font-weight="300"
+              letter-spacing="2" fill="#00FF88">LABS</text>
+
+        <!-- ── Materials Node (top) ────────────── -->
+        <circle cx="460" cy="82" r="54" fill="#0A0E1A" stroke="#00FF88" stroke-width="1.4" filter="url(#glow-m)"/>
+        <circle cx="460" cy="82" r="54" fill="rgba(0,255,136,0.04)"/>
+        <text x="460" y="70" text-anchor="middle" font-size="24">⚛️</text>
+        <text x="460" y="92" text-anchor="middle"
+              font-family="Inter,sans-serif" font-size="8.5" font-weight="700"
+              fill="#00FF88" letter-spacing="0.3">MATERIALS</text>
+        <text x="460" y="103" text-anchor="middle"
+              font-family="Inter,sans-serif" font-size="7.5" font-weight="400"
+              fill="#6B8CAE">SCIENCE</text>
+        <!-- Satellite tool labels -->
+        <text x="330" y="38" font-family="Inter,sans-serif" font-size="9" fill="#6B8CAE" text-anchor="middle">VASP · LAMMPS</text>
+        <text x="590" y="38" font-family="Inter,sans-serif" font-size="9" fill="#6B8CAE" text-anchor="middle">DeepMD · MACE</text>
+        <text x="330" y="118" font-family="Inter,sans-serif" font-size="9" fill="#6B8CAE" text-anchor="middle">pymatgen · ASE</text>
+        <text x="590" y="118" font-family="Inter,sans-serif" font-size="9" fill="#6B8CAE" text-anchor="middle">ALCHEMI · phonopy</text>
+
+        <!-- ── Bio Node (bottom-left) ──────────── -->
+        <circle cx="160" cy="410" r="54" fill="#0A0E1A" stroke="#00D4FF" stroke-width="1.4" filter="url(#glow-m)"/>
+        <circle cx="160" cy="410" r="54" fill="rgba(0,212,255,0.04)"/>
+        <text x="160" y="400" text-anchor="middle" font-size="24">🧬</text>
+        <text x="160" y="420" text-anchor="middle"
+              font-family="Inter,sans-serif" font-size="8.5" font-weight="700"
+              fill="#00D4FF" letter-spacing="0.3">BIOLOGICAL</text>
+        <text x="160" y="431" text-anchor="middle"
+              font-family="Inter,sans-serif" font-size="7.5" font-weight="400"
+              fill="#6B8CAE">MOLECULES</text>
+        <!-- Satellite labels -->
+        <text x="58"  y="358" font-family="Inter,sans-serif" font-size="9" fill="#6B8CAE" text-anchor="middle">GROMACS · NAMD</text>
+        <text x="55"  y="462" font-family="Inter,sans-serif" font-size="9" fill="#6B8CAE" text-anchor="middle">AlphaFold2 · VMD</text>
+        <text x="220" y="480" font-family="Inter,sans-serif" font-size="9" fill="#6B8CAE" text-anchor="middle">MDAnalysis · OpenMM</text>
+
+        <!-- ── Pharma Node (bottom-right) ─────── -->
+        <circle cx="760" cy="410" r="54" fill="#0A0E1A" stroke="#FF6B9D" stroke-width="1.4" filter="url(#glow-m)"/>
+        <circle cx="760" cy="410" r="54" fill="rgba(255,107,157,0.04)"/>
+        <text x="760" y="400" text-anchor="middle" font-size="24">💊</text>
+        <text x="760" y="420" text-anchor="middle"
+              font-family="Inter,sans-serif" font-size="8.5" font-weight="700"
+              fill="#FF6B9D" letter-spacing="0.3">PHARMA &amp;</text>
+        <text x="760" y="431" text-anchor="middle"
+              font-family="Inter,sans-serif" font-size="7.5" font-weight="400"
+              fill="#6B8CAE">DRUG DESIGN</text>
+        <!-- Satellite labels -->
+        <text x="862" y="358" font-family="Inter,sans-serif" font-size="9" fill="#6B8CAE" text-anchor="middle">AutoDock · RDKit</text>
+        <text x="865" y="462" font-family="Inter,sans-serif" font-size="9" fill="#6B8CAE" text-anchor="middle">DeepChem · FEP+</text>
+        <text x="698" y="480" font-family="Inter,sans-serif" font-size="9" fill="#6B8CAE" text-anchor="middle">Schrödinger · OpenBabel</text>
+      </svg>
+    </div>
+
+    <!-- ── Domain detail cards ──────────────────────────────────── -->
+    <div class="uc-cards">
 
       <!-- Materials -->
-      <div class="app-card mat r">
-        <span class="app-icon">⚛️</span>
-        <div class="app-title">Materials Science</div>
-        <div class="app-desc">
-          Accelerate discovery of next-generation materials — from battery
-          electrolytes and catalysts to semiconductors and structural alloys.
-          Chaai reasons across DFT, MD, and ML force fields simultaneously,
+      <div class="uc-card mat r">
+        <span class="uc-ico">⚛️</span>
+        <div class="uc-title">Materials Science</div>
+        <div class="uc-desc">
+          Accelerate discovery of next-generation materials — from battery electrolytes
+          and heterogeneous catalysts to semiconductors and structural alloys. Chaai
+          reasons across DFT, classical MD, and ML force fields simultaneously,
           closing the loop from atomistic simulation to property prediction.
         </div>
-        <div class="app-usecases">
-          <span class="app-uc">Battery materials</span>
-          <span class="app-uc">Solid electrolytes</span>
-          <span class="app-uc">Catalysis</span>
-          <span class="app-uc">Thin films</span>
-          <span class="app-uc">Phase diagrams</span>
-          <span class="app-uc">Defect engineering</span>
-          <span class="app-uc">MLIP training</span>
-          <span class="app-uc">Force field benchmarking</span>
+        <ul class="uc-list">
+          <li>Train and benchmark ML force fields (DeepMD, MACE) via ALCHEMI workflows</li>
+          <li>Automate VASP convergence checks, INCAR tuning, and OUTCAR parsing</li>
+          <li>Compute phonon dispersions, thermal conductivity, and defect formation energies</li>
+          <li>Generate and analyze phase diagrams with pymatgen and ASE</li>
+          <li>Run temperature-dependent LAMMPS MD scans and extract transport properties</li>
+        </ul>
+        <hr class="uc-sep">
+        <div class="uc-tools-lbl">Key Tools</div>
+        <div class="uc-tools">
+          <span class="uc-tool">VASP</span><span class="uc-tool">LAMMPS</span>
+          <span class="uc-tool">DeepMD</span><span class="uc-tool">MACE</span>
+          <span class="uc-tool">ALCHEMI</span><span class="uc-tool">pymatgen</span>
+          <span class="uc-tool">ASE</span><span class="uc-tool">phonopy</span>
+          <span class="uc-tool">NequIP</span><span class="uc-tool">CHGNet</span>
         </div>
-        <hr class="app-divider">
-        <div class="app-tools-label">Key Tools</div>
-        <div class="app-usecases">
-          <span class="app-uc">VASP</span>
-          <span class="app-uc">LAMMPS</span>
-          <span class="app-uc">DeepMD</span>
-          <span class="app-uc">MACE</span>
-          <span class="app-uc">ALCHEMI</span>
-          <span class="app-uc">pymatgen</span>
-          <span class="app-uc">ASE</span>
-          <span class="app-uc">phonopy</span>
+        <div class="uc-terminal">
+          <span class="prompt">chaai›</span> Compare DeepMD vs MACE for NVO cathode<br>
+          <span style="color:#2D4060">→ Running ALCHEMI benchmark at 300K/1000K...</span><br>
+          <span style="color:#2D4060">→ MACE RMSE: 42 meV/Å · DeepMD: 68 meV/Å</span>
         </div>
       </div>
 
       <!-- Bio -->
-      <div class="app-card bio r d1">
-        <span class="app-icon">🧬</span>
-        <div class="app-title">Biological Molecules</div>
-        <div class="app-desc">
+      <div class="uc-card bio r d1">
+        <span class="uc-ico">🧬</span>
+        <div class="uc-title">Biological Molecules</div>
+        <div class="uc-desc">
           From protein folding and membrane dynamics to enzyme catalysis and
-          nucleic acid interactions. Chaai handles the full MD pipeline —
-          system setup, long production runs, trajectory analysis, and
-          free energy calculations — across all major bio-simulation codes.
+          nucleic acid interactions. Chaai handles the full MD pipeline — system
+          setup, force field parameterization, long production runs, trajectory
+          analysis, and free energy calculations across all major bio-simulation codes.
         </div>
-        <div class="app-usecases">
-          <span class="app-uc">Protein dynamics</span>
-          <span class="app-uc">Membrane simulations</span>
-          <span class="app-uc">Free energy (FEP/MBAR)</span>
-          <span class="app-uc">Enzyme mechanisms</span>
-          <span class="app-uc">RNA / DNA folding</span>
-          <span class="app-uc">QM/MM</span>
-          <span class="app-uc">Coarse-grained MD</span>
-          <span class="app-uc">Structural biology</span>
+        <ul class="uc-list">
+          <li>Build and solvate GROMACS / AMBER systems from PDB structures</li>
+          <li>Compute free energy differences with FEP, MBAR, and thermodynamic integration</li>
+          <li>Analyze protein dynamics: RMSF, RMSD, PCA, contact maps, hydrogen bonds</li>
+          <li>Run QM/MM simulations for enzyme active site modeling with NAMD + ORCA</li>
+          <li>Predict structures with AlphaFold2 and ESMFold, then validate with MD</li>
+        </ul>
+        <hr class="uc-sep">
+        <div class="uc-tools-lbl">Key Tools</div>
+        <div class="uc-tools">
+          <span class="uc-tool">GROMACS</span><span class="uc-tool">NAMD</span>
+          <span class="uc-tool">AMBER</span><span class="uc-tool">OpenMM</span>
+          <span class="uc-tool">AlphaFold2</span><span class="uc-tool">MDAnalysis</span>
+          <span class="uc-tool">VMD</span><span class="uc-tool">CHARMM</span>
+          <span class="uc-tool">ESMFold</span><span class="uc-tool">ProDy</span>
         </div>
-        <hr class="app-divider">
-        <div class="app-tools-label">Key Tools</div>
-        <div class="app-usecases">
-          <span class="app-uc">GROMACS</span>
-          <span class="app-uc">NAMD</span>
-          <span class="app-uc">AMBER</span>
-          <span class="app-uc">OpenMM</span>
-          <span class="app-uc">AlphaFold2</span>
-          <span class="app-uc">MDAnalysis</span>
-          <span class="app-uc">VMD</span>
-          <span class="app-uc">CHARMM</span>
+        <div class="uc-terminal">
+          <span class="prompt">chaai›</span> Set up spike protein MD in GROMACS<br>
+          <span style="color:#2D4060">→ Solvating in TIP3P · 150 mM NaCl...</span><br>
+          <span style="color:#2D4060">→ Submitting 500 ns NPT run to SLURM</span>
         </div>
       </div>
 
       <!-- Pharma -->
-      <div class="app-card drug r d2">
-        <span class="app-icon">💊</span>
-        <div class="app-title">Pharma &amp; Drug Design</div>
-        <div class="app-desc">
+      <div class="uc-card drug r d2">
+        <span class="uc-ico">💊</span>
+        <div class="uc-title">Pharma &amp; Drug Design</div>
+        <div class="uc-desc">
           Compress the drug discovery pipeline with AI-guided virtual screening,
           binding affinity prediction, and lead optimization. Chaai orchestrates
-          docking campaigns, interprets ADMET properties, and integrates ML
-          models directly into HPC workflows at scale.
+          large docking campaigns, interprets ADMET profiles, and integrates deep
+          learning models directly into HPC workflows — at any scale.
         </div>
-        <div class="app-usecases">
-          <span class="app-uc">Virtual screening</span>
-          <span class="app-uc">Binding affinity (RBFE/ABFE)</span>
-          <span class="app-uc">Lead optimization</span>
-          <span class="app-uc">ADMET prediction</span>
-          <span class="app-uc">QSAR modeling</span>
-          <span class="app-uc">Protein-ligand docking</span>
-          <span class="app-uc">Fragment-based design</span>
-          <span class="app-uc">Scaffold hopping</span>
+        <ul class="uc-list">
+          <li>Screen millions of compounds with AutoDock Vina or Glide via SLURM array jobs</li>
+          <li>Compute relative and absolute binding free energies (RBFE / ABFE) with FEP+</li>
+          <li>Predict ADMET properties (solubility, BBB permeability, toxicity) with DeepChem</li>
+          <li>Generate QSAR models and interpret SAR from large compound libraries</li>
+          <li>Fragment-based design and scaffold hopping with RDKit + generative AI</li>
+        </ul>
+        <hr class="uc-sep">
+        <div class="uc-tools-lbl">Key Tools</div>
+        <div class="uc-tools">
+          <span class="uc-tool">AutoDock Vina</span><span class="uc-tool">RDKit</span>
+          <span class="uc-tool">DeepChem</span><span class="uc-tool">OpenBabel</span>
+          <span class="uc-tool">Schrödinger</span><span class="uc-tool">FEP+</span>
+          <span class="uc-tool">PyMOL</span><span class="uc-tool">BioPython</span>
+          <span class="uc-tool">GOLD</span><span class="uc-tool">CPPTRAJ</span>
         </div>
-        <hr class="app-divider">
-        <div class="app-tools-label">Key Tools</div>
-        <div class="app-usecases">
-          <span class="app-uc">AutoDock Vina</span>
-          <span class="app-uc">RDKit</span>
-          <span class="app-uc">DeepChem</span>
-          <span class="app-uc">OpenBabel</span>
-          <span class="app-uc">Schrödinger</span>
-          <span class="app-uc">PyMOL</span>
-          <span class="app-uc">BioPython</span>
-          <span class="app-uc">ProDy</span>
+        <div class="uc-terminal">
+          <span class="prompt">chaai›</span> Screen 50k compounds vs ACE2 receptor<br>
+          <span style="color:#2D4060">→ Launching SLURM array: 500 × 100 ligands...</span><br>
+          <span style="color:#2D4060">→ Top hit: ΔG = -10.4 kcal/mol · docking pose saved</span>
         </div>
       </div>
 
