@@ -69,3 +69,11 @@ HPCA can coordinate structure design, first-principles calculations, reference d
 | [State and recovery](state-and-recovery.md) | Restart behavior and scheduler reconciliation |
 | [Provenance](provenance.md) | Traceability from inputs to reported artifacts |
 | [Project specification](../reference/project-specification.md) | The validated contract supplied to execution |
+
+<div class="chaai-contact">
+  <div>
+    <h2>Need more information about HPCA?</h2>
+    <p>Ask about workflow capabilities, integration, validation, or research collaboration.</p>
+  </div>
+  <a class="chaai-contact__button" href="mailto:selvaus10@gmail.com?subject=HPCA%20information%20request">Contact Selva</a>
+</div>

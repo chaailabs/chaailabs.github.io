@@ -104,6 +104,35 @@
 }
 .md-typeset .mermaid .edgeLabel { color: var(--chaai-text) !important; }
 .md-typeset .MathJax { overflow-x: auto; overflow-y: hidden; }
+.chaai-contact {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 1.2rem;
+  align-items: center;
+  margin: 2.5rem 0 1rem;
+  padding: 1.25rem 1.35rem;
+  background: linear-gradient(135deg, rgba(0, 255, 136, 0.08), rgba(0, 212, 255, 0.06));
+  border: 1px solid var(--chaai-border);
+  border-radius: 0.85rem;
+}
+.md-typeset .chaai-contact h2,
+.md-typeset .chaai-contact h3 { margin: 0 0 0.35rem; color: inherit; }
+.md-typeset .chaai-contact .headerlink { display: none; }
+.md-typeset .chaai-contact p { margin: 0; color: var(--md-default-fg-color--light); }
+.md-typeset .chaai-contact__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.7rem;
+  padding: 0.65rem 1rem;
+  color: #04100a;
+  background: var(--chaai-green);
+  border-radius: 0.55rem;
+  font-size: 0.78rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
+.md-typeset .chaai-contact__button:hover { color: #04100a; filter: brightness(0.92); }
 .md-typeset table:not([class]) { border-radius: 0.65rem; overflow: hidden; }
 .md-typeset table:not([class]) th { background: rgba(0, 255, 136, 0.08); }
 
@@ -218,6 +247,8 @@
   .chaai-section-hero h1 { font-size: 2.25rem; }
   .md-typeset .mermaid { margin-inline: -0.5rem; padding: 1rem; }
   .md-typeset .mermaid svg { min-width: 760px; }
+  .chaai-contact { grid-template-columns: 1fr; }
+  .md-typeset .chaai-contact__button { width: 100%; }
 }
 
 @media (prefers-reduced-motion: reduce) {

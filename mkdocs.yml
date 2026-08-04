@@ -31,6 +31,9 @@ extra:
     - icon: fontawesome/brands/github
       link: https://github.com/chaailabs
       name: Chaai Labs on GitHub
+    - icon: fontawesome/solid/envelope
+      link: mailto:selvaus10@gmail.com?subject=Chaai%20Labs%20documentation%20feedback
+      name: Email Chaai Labs documentation feedback
 plugins: [search]
 markdown_extensions:
   - admonition
@@ -83,4 +86,4 @@ nav:
       - Documentation policy: development/documentation-policy.md
       - Testing and releases: development/testing-and-releases.md
       - Security: development/security.md
-copyright: Copyright &copy; 2026 <a href="https://chaailabs.github.io/">Chaai Labs</a>
+copyright: Copyright &copy; 2026 <a href="https://chaailabs.github.io/">Chaai Labs</a> &middot; <a href="mailto:selvaus10@gmail.com?subject=Chaai%20Labs%20documentation%20feedback">Contact and feedback</a>
