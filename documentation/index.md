@@ -19,33 +19,33 @@ Chaai Labs connects agentic reasoning, simulation tools, and durable HPC workflo
 
 <div class="chaai-grid" markdown>
 
-<a class="chaai-card" href="chaai/">
+<div class="chaai-card">
   <span class="chaai-card__number">01</span>
   <h3>Chaai</h3>
   <p>Conversational scientific reasoning connected to schedulers, files, structures, simulation codes, and analysis tools.</p>
-  <span class="chaai-card__link">Explore the agent →</span>
-</a>
+  <a class="chaai-card__link" href="chaai/">Explore the agent →</a>
+</div>
 
-<a class="chaai-card" href="hpca/">
+<div class="chaai-card">
   <span class="chaai-card__number">02</span>
   <h3>HPCA engine</h3>
   <p>Deterministic stage contracts, durable state, scheduler reconciliation, validation gates, and provenance.</p>
-  <span class="chaai-card__link">Explore the engine →</span>
-</a>
+  <a class="chaai-card__link" href="hpca/">Explore the engine →</a>
+</div>
 
-<a class="chaai-card" href="workflows/battery-materials/">
+<div class="chaai-card">
   <span class="chaai-card__number">03</span>
   <h3>Scientific workflows</h3>
   <p>Composable workflows for battery materials and machine-learned interatomic-potential lifecycles.</p>
-  <span class="chaai-card__link">View workflows →</span>
-</a>
+  <a class="chaai-card__link" href="workflows/battery-materials/">View workflows →</a>
+</div>
 
-<a class="chaai-card" href="operations/observability/">
+<div class="chaai-card">
   <span class="chaai-card__number">04</span>
   <h3>Operations</h3>
   <p>Observe workflow state, reconcile scheduler jobs, diagnose failures, and recover without losing evidence.</p>
-  <span class="chaai-card__link">Open the runbook →</span>
-</a>
+  <a class="chaai-card__link" href="operations/observability/">Open the runbook →</a>
+</div>
 
 </div>
 

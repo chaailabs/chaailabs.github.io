@@ -76,25 +76,30 @@
 }
 .md-typeset .mermaid svg {
   width: auto !important;
-  min-width: 980px;
+  min-width: 760px;
   max-width: none !important;
   height: auto;
 }
 .md-typeset .mermaid .nodeLabel,
 .md-typeset .mermaid .edgeLabel {
-  font-size: 21px !important;
+  font-size: 24px !important;
   font-weight: 800 !important;
   line-height: 1.35 !important;
 }
 .md-typeset .mermaid .nodeLabel p,
+.md-typeset .mermaid .nodeLabel div,
+.md-typeset .mermaid foreignObject,
+.md-typeset .mermaid foreignObject div,
+.md-typeset .mermaid foreignObject span,
+.md-typeset .mermaid foreignObject p,
 .md-typeset .mermaid .label text,
 .md-typeset .mermaid text {
-  font-size: 21px !important;
+  font-size: 24px !important;
   font-weight: 800 !important;
   line-height: 1.35 !important;
 }
 .md-typeset .mermaid .edgeLabel p {
-  font-size: 18px !important;
+  font-size: 20px !important;
   font-weight: 750 !important;
 }
 .md-typeset .mermaid .edgeLabel { color: var(--chaai-text) !important; }
@@ -166,13 +171,16 @@
 
 .chaai-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1rem;
   margin: 1.7rem 0 2.8rem;
 }
 .chaai-grid--compact { margin-bottom: 2.2rem; }
 .md-typeset .chaai-card {
-  display: block;
+  display: flex;
+  min-height: 13rem;
+  flex-direction: column;
+  align-items: flex-start;
   padding: 1.35rem;
   color: inherit;
   background: linear-gradient(150deg, rgba(17, 24, 39, 0.96), rgba(13, 18, 32, 0.96));
@@ -180,15 +188,23 @@
   border-radius: 0.85rem;
   transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
 }
-.md-typeset a.chaai-card:hover {
+.md-typeset .chaai-card:hover {
   transform: translateY(-3px);
   border-color: var(--chaai-border);
   box-shadow: 0 14px 38px rgba(0, 0, 0, 0.18);
 }
 .md-typeset .chaai-card h3 { margin: 0.45rem 0 0.55rem; color: var(--chaai-text); }
+.md-typeset .chaai-card h3 .headerlink { display: none; }
 .md-typeset .chaai-card p { margin: 0; color: var(--chaai-muted); font-size: 0.83rem; }
 .chaai-card__number { color: var(--chaai-green); font-family: monospace; font-size: 0.65rem; font-weight: 800; letter-spacing: 0.1em; }
-.chaai-card__link { display: inline-block; margin-top: 1rem; color: var(--chaai-green); font-size: 0.75rem; font-weight: 700; }
+.md-typeset .chaai-card__link {
+  display: inline-block;
+  margin-top: auto;
+  padding-top: 1rem;
+  color: var(--chaai-green);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
 
 @media screen and (max-width: 76.2em) {
   .md-nav--primary .md-nav__title { background: #0a0e1a; color: var(--chaai-text); }
@@ -201,7 +217,7 @@
   .chaai-hero h1,
   .chaai-section-hero h1 { font-size: 2.25rem; }
   .md-typeset .mermaid { margin-inline: -0.5rem; padding: 1rem; }
-  .md-typeset .mermaid svg { min-width: 900px; }
+  .md-typeset .mermaid svg { min-width: 760px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

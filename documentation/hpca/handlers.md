@@ -5,7 +5,7 @@ This page documents each HPCA handler family. Enabled handlers and dependencies 
 ## Common handler contract
 
 ```mermaid
-flowchart LR
+flowchart TB
   A[Check dependencies] --> B{Inputs ready?}
   B -->|no| W[Remain pending]
   B -->|yes| C{Complete and fresh?}
@@ -24,7 +24,7 @@ This separation between a handler and a handler run follows a common orchestrati
 ## h00 — Materials design
 
 ```mermaid
-flowchart LR
+flowchart TB
   S[Project specification] --> C{Material category}
   C -->|crystal| X[Build or load crystal]
   C -->|polymer| P[Build repeat units and chain]
@@ -40,7 +40,7 @@ flowchart LR
 ## h01 — DFT
 
 ```mermaid
-flowchart LR
+flowchart TB
   I[Designed structure] --> R[Optional AIMD pre-relaxation]
   R --> V[Variable-cell relaxation]
   V --> O[Ionic optimization]
@@ -60,7 +60,7 @@ Each enabled subtask must produce its expected converged artifacts. Subtasks are
 ## h02 — Ab initio molecular dynamics
 
 ```mermaid
-flowchart LR
+flowchart TB
   O[Optimized structure] --> T[Expand temperature matrix]
   T --> J[Generate per-temperature inputs]
   J --> S[Submit scheduler jobs]
@@ -75,7 +75,7 @@ flowchart LR
 ## h03 — Migration barriers with NEB
 
 ```mermaid
-flowchart LR
+flowchart TB
   O[Optimized structure] --> P[Define migration path]
   P --> I[Generate intermediate images]
   I --> J[Run constrained NEB]
@@ -89,7 +89,7 @@ The forward barrier is \(E_m=\max_i E_i-E_0\). Acceptance also requires sensible
 ## h04 — Machine-learned interatomic potential
 
 ```mermaid
-flowchart LR
+flowchart TB
   A[AIMD configurations] --> D[Assemble and split dataset]
   D --> T[Train enabled backend]
   T --> V[Evaluate energies forces and stress]
@@ -123,7 +123,7 @@ This handler fans out across data sources, temperatures, and observables. See [A
 ## h07 — Electronic analysis
 
 ```mermaid
-flowchart LR
+flowchart TB
   D[DFT outputs] --> B[Parse Bader charges]
   D --> O[Parse total and projected DOS]
   B --> Q[Compute charge transfer]
@@ -138,7 +138,7 @@ Charge arrays must map to expected atoms. Energy references and DOS thresholds m
 ## h08 — Electrochemistry
 
 ```mermaid
-flowchart LR
+flowchart TB
   E[Consistent DFT energies] --> F[Formation energies]
   F --> H[Convex-hull stability]
   F --> O[Composition-dependent voltage]
@@ -152,7 +152,7 @@ For transfer of \(n\) electrons, \(V=-\Delta G/(nF)\). If zero-temperature elect
 ## h09 — Continuum models
 
 ```mermaid
-flowchart LR
+flowchart TB
   A[Atomistic transport outputs] --> S[Select model]
   S --> N[Nernst-Planck]
   S --> F[Fickian profile]
@@ -172,7 +172,7 @@ Continuum results inherit the uncertainty and domain limits of their atomistic i
 ## h10 — Plotting
 
 ```mermaid
-flowchart LR
+flowchart TB
   D[Analysis CSV and JSON] --> S[Schema and unit checks]
   S --> F[Generate consistent figures]
   F --> P[PNG artifact]
@@ -186,7 +186,7 @@ Figures remain linked to source data, axis units, transformation choices, and ge
 ## h11 — Manuscript
 
 ```mermaid
-flowchart LR
+flowchart TB
   A[Validated analyses] --> F[Resolve figures and tables]
   F --> N[Generate technical narrative]
   N --> C[Attach methods and provenance]
@@ -199,7 +199,7 @@ Generated prose is a draft. Claims must be traceable to validated artifacts and 
 ## h12 — Chaai adaptation
 
 ```mermaid
-flowchart LR
+flowchart TB
   E[Approved examples] --> S[Sanitize and structure]
   S --> Q[Quality and leakage review]
   Q --> T[Create training records]
@@ -212,7 +212,7 @@ This handler is independent of the simulation chain. Only reviewed, non-sensitiv
 ## h13 — Active learning
 
 ```mermaid
-flowchart LR
+flowchart TB
   M[Current MLIP] --> X[Explore configurations]
   X --> U[Estimate uncertainty]
   U --> S[Select informative structures]
