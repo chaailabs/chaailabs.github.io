@@ -223,11 +223,3 @@ flowchart TB
 ```
 
 A candidate model replaces the current model only after fixed validation tests and coverage tests for the newly sampled region pass.
-
-<div class="chaai-contact">
-  <div>
-    <h2>Handler question or correction?</h2>
-    <p>Send the handler name, expected behavior, and the section that needs clarification.</p>
-  </div>
-  <a class="chaai-contact__button" href="mailto:selvaus10@gmail.com?subject=HPCA%20handler%20documentation%20feedback">Send feedback</a>
-</div>
