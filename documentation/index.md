@@ -40,18 +40,25 @@ Chaai Labs connects agentic reasoning, simulation tools, and durable HPC workflo
   <span class="chaai-card__link">View workflows →</span>
 </a>
 
+<a class="chaai-card" href="operations/observability/">
+  <span class="chaai-card__number">04</span>
+  <h3>Operations</h3>
+  <p>Observe workflow state, reconcile scheduler jobs, diagnose failures, and recover without losing evidence.</p>
+  <span class="chaai-card__link">Open the runbook →</span>
+</a>
+
 </div>
 
 ## One system, explicit responsibilities
 
 ```mermaid
-flowchart LR
+flowchart TB
   U[Scientist] --> C[Chaai reasoning and tools]
   C --> P[Validated project specification]
   P --> H[HPCA execution engine]
   H --> S[Scheduler and simulation codes]
   S --> V[Validated artifacts and provenance]
-  V --> C
+  V -. evidence and results .-> C
 ```
 
 !!! note "Current maturity"
@@ -67,3 +74,5 @@ flowchart LR
 | Integrate a scientific backend | [Tools and backends](chaai/tools-and-backends.md) |
 | Understand recovery and restart | [HPCA state and recovery](hpca/state-and-recovery.md) |
 | Inspect traceability guarantees | [HPCA provenance](hpca/provenance.md) |
+| Diagnose a stuck or failed run | [Troubleshooting](operations/troubleshooting.md) |
+| Understand generated analysis data | [Analysis output reference](reference/analysis-outputs.md) |
