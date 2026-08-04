@@ -1,0 +1,1515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chaai Labs — Accelerating Scientific Computing with AI</title>
+  <meta name="description" content="Chaai Labs builds HPC-native agentic AI and validated workflow infrastructure for computational materials science.">
+  <meta property="og:title" content="Chaai Labs — Accelerating Scientific Computing with AI">
+  <meta property="og:description" content="Agentic AI built natively for HPC. Understands VASP, LAMMPS, DeepMD, SLURM.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="logo-icon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+/* ── Reset & Variables ─────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:           #0A0E1A;
+  --bg2:          #0D1220;
+  --bg3:          #111827;
+  --accent:       #00FF88;
+  --accent-dim:   rgba(0,255,136,0.55);
+  --accent-glow:  rgba(0,255,136,0.12);
+  --accent2:      #00D4FF;
+  --text:         #E8F4FD;
+  --muted:        #6B8CAE;
+  --subtle:       #2D4060;
+  --border:       rgba(0,255,136,0.13);
+  --card:         rgba(13,18,32,0.85);
+  --radius:       14px;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--accent-dim); border-radius: 3px; }
+::selection { background: rgba(0,255,136,0.2); }
+
+h1,h2,h3,h4 { font-weight: 700; line-height: 1.15; letter-spacing: -0.025em; }
+
+.g-text {
+  background: linear-gradient(130deg, var(--accent) 0%, var(--accent2) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.container { max-width: 1160px; margin: 0 auto; padding: 0 28px; }
+section { padding: 110px 0; }
+
+/* ── Navigation ────────────────────────────────────────────────────────────── */
+#nav {
+  position: fixed; top: 0; width: 100%; z-index: 999;
+  padding: 18px 0;
+  transition: background 0.35s ease, border-color 0.35s ease, backdrop-filter 0.35s ease;
+}
+#nav.pinned {
+  background: rgba(10,14,26,0.88);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-wrap { display: flex; align-items: center; justify-content: space-between; }
+
+.nav-brand {
+  display: flex; align-items: center; gap: 11px;
+  text-decoration: none; color: var(--text);
+}
+.nav-icon { width: 34px; height: 34px; flex-shrink: 0; }
+.brand-name {
+  font-size: 1.15rem; font-weight: 800;
+  letter-spacing: -0.02em;
+}
+.brand-name em { font-style: normal; color: var(--accent); font-weight: 300; }
+
+.nav-links { display: flex; gap: 28px; list-style: none; }
+.nav-links a {
+  color: var(--muted); text-decoration: none;
+  font-size: 0.88rem; font-weight: 500;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--accent); }
+
+.nav-btn {
+  background: var(--accent); color: #000;
+  padding: 9px 22px; border-radius: 9px;
+  font-weight: 700; font-size: 0.88rem;
+  text-decoration: none;
+  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+}
+.nav-btn:hover {
+  background: #00e87c;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 24px rgba(0,255,136,0.28);
+}
+
+/* ── Hero ──────────────────────────────────────────────────────────────────── */
+#hero {
+  min-height: 100vh;
+  display: flex; align-items: center;
+  position: relative; overflow: hidden; padding: 0;
+}
+#canvas {
+  position: absolute; inset: 0; z-index: 0;
+  pointer-events: none;
+}
+.hero-inner {
+  position: relative; z-index: 1;
+  padding: 120px 0 80px;
+}
+.hero-pill {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(0,255,136,0.07);
+  border: 1px solid rgba(0,255,136,0.22);
+  color: var(--accent);
+  padding: 7px 16px; border-radius: 999px;
+  font-size: 0.78rem; font-weight: 600;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  margin-bottom: 32px;
+}
+.hero-pill::before {
+  content: '';
+  width: 7px; height: 7px;
+  background: var(--accent); border-radius: 50%;
+  animation: blink 2.2s ease-in-out infinite;
+}
+@keyframes blink {
+  0%,100% { opacity:1; box-shadow: 0 0 6px var(--accent); }
+  50%      { opacity:0.35; box-shadow: none; }
+}
+
+.hero-h1 {
+  font-size: clamp(3.2rem, 7.5vw, 5.8rem);
+  font-weight: 900;
+  letter-spacing: -0.045em;
+  line-height: 1.04;
+  margin-bottom: 26px;
+  max-width: 820px;
+}
+.hero-sub {
+  font-size: clamp(1rem, 1.8vw, 1.25rem);
+  color: var(--muted); line-height: 1.75;
+  max-width: 580px; margin-bottom: 44px;
+}
+.hero-btns { display: flex; gap: 14px; flex-wrap: wrap; }
+
+.btn-a {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--accent); color: #000;
+  padding: 15px 30px; border-radius: 11px;
+  font-weight: 700; font-size: 1rem;
+  text-decoration: none;
+  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+}
+.btn-a:hover {
+  background: #00e87c;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 36px rgba(0,255,136,0.32);
+}
+.btn-b {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: transparent; color: var(--text);
+  padding: 15px 30px; border-radius: 11px;
+  font-weight: 600; font-size: 1rem;
+  text-decoration: none;
+  border: 1px solid rgba(255,255,255,0.13);
+  transition: border-color 0.2s, color 0.2s, transform 0.15s;
+}
+.btn-b:hover {
+  border-color: var(--accent); color: var(--accent);
+  transform: translateY(-2px);
+}
+
+/* ── Stats bar ─────────────────────────────────────────────────────────────── */
+#stats {
+  padding: 56px 0;
+  background: rgba(0,255,136,0.02);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.stats-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 24px; }
+.stat { text-align: center; }
+.stat-n {
+  font-size: 2.6rem; font-weight: 800;
+  letter-spacing: -0.04em; color: var(--accent);
+  line-height: 1;
+}
+.stat-l {
+  color: var(--muted); font-size: 0.85rem;
+  margin-top: 6px; line-height: 1.4;
+}
+
+/* ── About ─────────────────────────────────────────────────────────────────── */
+#about .container {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 88px; align-items: center;
+}
+.tag {
+  font-size: 0.75rem; font-weight: 700;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 14px;
+}
+.section-h { font-size: clamp(1.9rem, 3.8vw, 2.9rem); margin-bottom: 20px; }
+.body-text { color: var(--muted); line-height: 1.85; font-size: 1.02rem; }
+.body-text + .body-text { margin-top: 14px; }
+
+.pipeline {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 28px 24px;
+  font-family: 'JetBrains Mono', monospace;
+}
+.p-row {
+  display: flex; align-items: flex-start; gap: 16px;
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+.p-row:last-child { border-bottom: none; padding-bottom: 0; }
+.p-row:first-child { padding-top: 0; }
+.p-badge {
+  width: 30px; height: 30px; border-radius: 8px; flex-shrink: 0;
+  background: rgba(0,255,136,0.09); border: 1px solid rgba(0,255,136,0.28);
+  color: var(--accent); font-size: 0.72rem; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+}
+.p-name { color: var(--text); font-weight: 600; font-size: 0.85rem; margin-bottom: 2px; }
+.p-detail { color: var(--muted); font-size: 0.74rem; line-height: 1.5; }
+
+/* ── Ecosystem ─────────────────────────────────────────────────────────────── */
+#ecosystem { background: var(--bg2); }
+.eco-head { text-align: center; margin-bottom: 56px; }
+.eco-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.eco-cat {
+  background: var(--card);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: var(--radius); padding: 24px;
+  transition: border-color 0.2s, transform 0.2s;
+}
+.eco-cat:hover { border-color: var(--border); transform: translateY(-2px); }
+.eco-cat-title {
+  font-size: 0.72rem; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 16px;
+  display: flex; align-items: center; gap: 8px;
+}
+.eco-cat-title::after {
+  content: ''; flex: 1; height: 1px;
+  background: linear-gradient(90deg, var(--border), transparent);
+}
+.eco-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.eco-tag {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  color: var(--text); font-size: 0.78rem; font-weight: 500;
+  padding: 5px 12px; border-radius: 6px;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+}
+.eco-tag:hover {
+  background: rgba(0,255,136,0.08);
+  border-color: var(--border); color: var(--accent);
+}
+.eco-tag.hi {
+  background: rgba(0,255,136,0.08);
+  border-color: rgba(0,255,136,0.25);
+  color: var(--accent);
+}
+
+/* ── Features ─────────────────────────────────────────────────────────────── */
+#features { background: var(--bg); }
+.sec-head { text-align: center; margin-bottom: 64px; }
+.sec-head .section-h { margin-top: 6px; }
+
+.feat-grid {
+  display: grid; grid-template-columns: repeat(3,1fr);
+  gap: 22px;
+}
+.feat-card {
+  background: var(--card);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: var(--radius);
+  padding: 32px 28px;
+  position: relative; overflow: hidden;
+  transition: transform 0.3s ease, border-color 0.3s, box-shadow 0.3s;
+  cursor: default;
+}
+.feat-card::after {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.feat-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--border);
+  box-shadow: 0 24px 48px rgba(0,0,0,0.35), 0 0 0 1px var(--border);
+}
+.feat-card:hover::after { opacity: 1; }
+.feat-ico {
+  width: 50px; height: 50px; border-radius: 13px;
+  background: rgba(0,255,136,0.08);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.5rem; margin-bottom: 22px;
+}
+.feat-h { font-size: 1rem; font-weight: 700; margin-bottom: 10px; }
+.feat-p { color: var(--muted); font-size: 0.88rem; line-height: 1.72; }
+
+/* ── How it works ──────────────────────────────────────────────────────────── */
+.hiw-head { text-align: center; margin-bottom: 72px; }
+.hiw-row {
+  display: grid; grid-template-columns: repeat(3,1fr);
+  gap: 36px; position: relative;
+}
+.hiw-row::before {
+  content: '';
+  position: absolute; top: 26px; left: 16.66%; width: 66.66%; height: 1px;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  opacity: 0.25;
+  pointer-events: none;
+}
+.hiw-step { text-align: center; padding: 0 12px; }
+.hiw-num {
+  width: 52px; height: 52px; border-radius: 15px; margin: 0 auto 26px;
+  background: rgba(0,255,136,0.07); border: 1px solid var(--border);
+  color: var(--accent); font-size: 1.15rem; font-weight: 800;
+  display: flex; align-items: center; justify-content: center;
+}
+.hiw-h { font-size: 1.08rem; font-weight: 700; margin-bottom: 10px; }
+.hiw-p { color: var(--muted); font-size: 0.88rem; line-height: 1.72; }
+.hiw-code {
+  margin-top: 16px; padding: 14px;
+  background: rgba(0,0,0,0.32);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 9px; text-align: left;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.71rem; color: var(--accent);
+  line-height: 1.65;
+}
+.hiw-code .dim { color: var(--muted); }
+
+/* ── Tech stack ────────────────────────────────────────────────────────────── */
+#tech { background: var(--bg2); }
+.tech-row {
+  display: grid; grid-template-columns: repeat(5,1fr);
+  gap: 16px;
+}
+.tech-card {
+  background: var(--card);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: var(--radius); padding: 22px 16px;
+  text-align: center;
+  transition: border-color 0.2s, transform 0.2s;
+}
+.tech-card:hover {
+  border-color: var(--border);
+  transform: translateY(-3px);
+}
+.tech-ico { font-size: 2rem; margin-bottom: 10px; }
+.tech-n { font-size: 0.8rem; font-weight: 700; color: var(--text); }
+.tech-r { font-size: 0.7rem; color: var(--muted); margin-top: 3px; }
+
+/* ── Team ──────────────────────────────────────────────────────────────────── */
+.team-head { text-align: center; margin-bottom: 60px; }
+.team-row { display: flex; justify-content: center; }
+.team-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 22px; padding: 44px 40px;
+  text-align: center; max-width: 300px; width: 100%;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.team-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 24px 64px rgba(0,255,136,0.1);
+}
+.team-av {
+  width: 84px; height: 84px; border-radius: 50%;
+  background: linear-gradient(135deg, rgba(0,255,136,0.28), rgba(0,212,255,0.28));
+  border: 2px solid var(--accent);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2.2rem; font-weight: 800; color: var(--accent);
+  margin: 0 auto 22px;
+  box-shadow: 0 0 30px rgba(0,255,136,0.15);
+}
+.team-n { font-size: 1.35rem; font-weight: 800; margin-bottom: 5px; }
+.team-r { color: var(--accent); font-size: 0.85rem; font-weight: 600; margin-bottom: 18px; }
+.team-bio { color: var(--muted); font-size: 0.85rem; line-height: 1.7; }
+.team-socials {
+  display: flex; gap: 10px; justify-content: center; margin-top: 22px;
+}
+.team-s {
+  width: 36px; height: 36px; border-radius: 9px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.09);
+  display: flex; align-items: center; justify-content: center;
+  text-decoration: none; color: var(--muted);
+  font-size: 0.85rem; font-weight: 700;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+}
+.team-s:hover {
+  background: rgba(0,255,136,0.1);
+  border-color: var(--accent); color: var(--accent);
+}
+
+/* ── Use Cases ─────────────────────────────────────────────────────────────── */
+#usecases { background: var(--bg); overflow: hidden; }
+.uc-head { text-align: center; margin-bottom: 52px; }
+.uc-diagram { display: flex; justify-content: center; margin-bottom: 72px; position: relative; }
+.uc-diagram svg { width: 100%; max-width: 940px; height: auto; }
+
+/* SVG animated elements */
+@keyframes beam-flow  { from { stroke-dashoffset: 24; } to { stroke-dashoffset: 0; } }
+@keyframes node-pulse { 0%,100% { opacity:.18; } 50% { opacity:.07; } }
+@keyframes center-glow{ 0%,100% { opacity:.22; r:92; } 50% { opacity:.08; r:104; } }
+@keyframes pt-mat  { 0% { offset-distance:0%   } 100% { offset-distance:100% } }
+@keyframes spin-orbit { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+/* Domain detail cards */
+.uc-cards { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
+.uc-card {
+  background: var(--card);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 20px; padding: 36px 28px;
+  position: relative; overflow: hidden;
+  transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+}
+.uc-card::before {
+  content: ''; position: absolute;
+  top: 0; left: 0; right: 0; height: 3px;
+}
+.uc-card.mat::before  { background: linear-gradient(90deg, var(--accent), var(--accent2)); }
+.uc-card.bio::before  { background: linear-gradient(90deg, #00D4FF, #7B61FF); }
+.uc-card.drug::before { background: linear-gradient(90deg, #FF6B9D, #FF9A3C); }
+.uc-card:hover { transform: translateY(-6px); box-shadow: 0 28px 56px rgba(0,0,0,0.35); }
+.uc-card.mat:hover  { border-color: rgba(0,255,136,0.25); }
+.uc-card.bio:hover  { border-color: rgba(0,212,255,0.25); }
+.uc-card.drug:hover { border-color: rgba(255,107,157,0.25); }
+.uc-ico { font-size: 2.6rem; margin-bottom: 18px; display: block; line-height: 1; }
+.uc-title { font-size: 1.22rem; font-weight: 800; margin-bottom: 12px; letter-spacing: -0.02em; }
+.uc-card.mat .uc-title  { color: var(--accent); }
+.uc-card.bio .uc-title  { color: #00D4FF; }
+.uc-card.drug .uc-title { color: #FF6B9D; }
+.uc-desc { color: var(--muted); font-size: 0.87rem; line-height: 1.78; margin-bottom: 20px; }
+.uc-list { list-style: none; margin-bottom: 22px; display: flex; flex-direction: column; gap: 7px; }
+.uc-list li { display: flex; align-items: flex-start; gap: 8px; font-size: 0.84rem; color: var(--muted); }
+.uc-list li::before { content: '→'; flex-shrink: 0; font-weight: 700; }
+.uc-card.mat  .uc-list li::before { color: var(--accent); }
+.uc-card.bio  .uc-list li::before { color: #00D4FF; }
+.uc-card.drug .uc-list li::before { color: #FF6B9D; }
+.uc-sep { border: none; border-top: 1px solid rgba(255,255,255,0.05); margin: 20px 0; }
+.uc-tools-lbl { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--subtle); margin-bottom: 10px; }
+.uc-tools { display: flex; flex-wrap: wrap; gap: 7px; }
+.uc-tool { font-size: 0.74rem; font-weight: 500; padding: 4px 10px; border-radius: 5px; }
+.uc-card.mat  .uc-tool { background: rgba(0,255,136,0.07);  color: var(--accent); border: 1px solid rgba(0,255,136,0.2); }
+.uc-card.bio  .uc-tool { background: rgba(0,212,255,0.07);  color: #00D4FF; border: 1px solid rgba(0,212,255,0.2); }
+.uc-card.drug .uc-tool { background: rgba(255,107,157,0.07); color: #FF9A3C; border: 1px solid rgba(255,107,157,0.2); }
+.uc-terminal {
+  margin-top: 20px; padding: 14px 16px;
+  background: rgba(0,0,0,0.35);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 9px;
+  font-family: 'JetBrains Mono', monospace; font-size: 0.7rem;
+  line-height: 1.6; color: var(--muted);
+}
+.uc-terminal .prompt { color: var(--accent); }
+.uc-card.bio  .uc-terminal .prompt { color: #00D4FF; }
+.uc-card.drug .uc-terminal .prompt { color: #FF6B9D; }
+
+/* ── CTA ───────────────────────────────────────────────────────────────────── */
+#cta {
+  text-align: center;
+  background: radial-gradient(ellipse at 50% 0%, rgba(0,255,136,0.07) 0%, transparent 65%);
+  position: relative; overflow: hidden;
+}
+#cta::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 50% 100%, rgba(0,212,255,0.04) 0%, transparent 60%);
+  pointer-events: none;
+}
+#cta h2 { font-size: clamp(2.2rem, 5vw, 3.8rem); margin-bottom: 18px; }
+#cta p {
+  color: var(--muted); font-size: 1.1rem; line-height: 1.7;
+  max-width: 480px; margin: 0 auto 44px;
+}
+.cta-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+/* ── Footer ────────────────────────────────────────────────────────────────── */
+footer {
+  padding: 36px 0;
+  border-top: 1px solid var(--border);
+}
+.foot-wrap {
+  display: flex; align-items: center;
+  justify-content: space-between; flex-wrap: wrap; gap: 16px;
+}
+.foot-brand {
+  display: flex; align-items: center; gap: 9px;
+  text-decoration: none; color: var(--text);
+}
+.foot-brand svg { width: 26px; height: 26px; }
+.foot-name { font-size: 0.95rem; font-weight: 800; letter-spacing: -0.01em; }
+.foot-name em { font-style: normal; color: var(--accent); font-weight: 300; }
+.foot-copy { color: var(--muted); font-size: 0.82rem; }
+.foot-links { display: flex; gap: 22px; }
+.foot-links a {
+  color: var(--muted); text-decoration: none;
+  font-size: 0.82rem; font-weight: 500;
+  transition: color 0.2s;
+}
+.foot-links a:hover { color: var(--accent); }
+
+/* ── Reveal animation ──────────────────────────────────────────────────────── */
+.r {
+  opacity: 0; transform: translateY(28px);
+  transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1),
+              transform 0.7s cubic-bezier(0.16,1,0.3,1);
+}
+.r.on { opacity: 1; transform: translateY(0); }
+.d1 { transition-delay: 0.08s; }
+.d2 { transition-delay: 0.16s; }
+.d3 { transition-delay: 0.24s; }
+.d4 { transition-delay: 0.32s; }
+.d5 { transition-delay: 0.40s; }
+
+/* ── Responsive ────────────────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  section { padding: 72px 0; }
+  #about .container { grid-template-columns: 1fr; gap: 48px; }
+  .feat-grid { grid-template-columns: 1fr 1fr; }
+  .stats-row { grid-template-columns: 1fr 1fr; }
+  .tech-row { grid-template-columns: repeat(3,1fr); }
+  .eco-grid { grid-template-columns: 1fr 1fr; }
+  .uc-cards { grid-template-columns: 1fr; }
+}
+@media (max-width: 640px) {
+  .nav-links { display: none; }
+  .feat-grid { grid-template-columns: 1fr; }
+  .hiw-row { grid-template-columns: 1fr; }
+  .hiw-row::before { display: none; }
+  .tech-row { grid-template-columns: repeat(2,1fr); }
+  .eco-grid { grid-template-columns: 1fr; }
+  .uc-cards { grid-template-columns: 1fr; }
+  .foot-wrap { flex-direction: column; text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── Navigation ─────────────────────────────────────────────────────────── -->
+<nav id="nav">
+  <div class="container nav-wrap">
+    <a href="#" class="nav-brand">
+      <!-- Icon: C-node-network -->
+      <svg class="nav-icon" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <filter id="ng">
+            <feGaussianBlur stdDeviation="1.5" result="b"/>
+            <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <filter id="ng2">
+            <feGaussianBlur stdDeviation="2.5" result="b"/>
+            <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+        <!-- C-spine (thicker) -->
+        <g stroke="#00FF88" stroke-width="1.8" opacity="0.6">
+          <line x1="38" y1="6"  x2="24" y2="4"/>
+          <line x1="24" y1="4"  x2="11" y2="12"/>
+          <line x1="11" y1="12" x2="6"  y2="22"/>
+          <line x1="6"  y1="22" x2="11" y2="32"/>
+          <line x1="11" y1="32" x2="24" y2="40"/>
+          <line x1="24" y1="40" x2="38" y2="38"/>
+        </g>
+        <!-- Cross-links (subtle) -->
+        <g stroke="#00FF88" stroke-width="0.7" opacity="0.18">
+          <line x1="38" y1="6"  x2="11" y2="12"/>
+          <line x1="24" y1="4"  x2="6"  y2="22"/>
+          <line x1="11" y1="12" x2="11" y2="32"/>
+          <line x1="6"  y1="22" x2="24" y2="40"/>
+        </g>
+        <!-- Traveling particle along C-spine -->
+        <path id="csp" d="M38,6 L24,4 L11,12 L6,22 L11,32 L24,40 L38,38" fill="none"/>
+        <circle r="2.2" fill="#00FF88" filter="url(#ng2)">
+          <animateMotion dur="2.6s" repeatCount="indefinite"><mpath href="#csp"/></animateMotion>
+          <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.06;0.88;1" dur="2.6s" repeatCount="indefinite"/>
+        </circle>
+        <!-- Nodes with staggered pulse -->
+        <g filter="url(#ng)">
+          <circle cx="38" cy="6"  r="3.2" fill="#00FF88"><animate attributeName="opacity" values="1;0.35;1" dur="3.2s" begin="0s"    repeatCount="indefinite"/></circle>
+          <circle cx="24" cy="4"  r="2.8" fill="#00FF88"><animate attributeName="opacity" values="1;0.35;1" dur="3.2s" begin="0.45s"  repeatCount="indefinite"/></circle>
+          <circle cx="11" cy="12" r="2.8" fill="#00FF88"><animate attributeName="opacity" values="1;0.35;1" dur="3.2s" begin="0.9s"   repeatCount="indefinite"/></circle>
+          <circle cx="6"  cy="22" r="3.5" fill="#00FF88">
+            <animate attributeName="r"       values="3.5;4.6;3.5" dur="2.2s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="1;0.5;1"     dur="2.2s" repeatCount="indefinite"/>
+          </circle>
+          <circle cx="11" cy="32" r="2.8" fill="#00FF88"><animate attributeName="opacity" values="1;0.35;1" dur="3.2s" begin="1.8s"   repeatCount="indefinite"/></circle>
+          <circle cx="24" cy="40" r="2.8" fill="#00FF88"><animate attributeName="opacity" values="1;0.35;1" dur="3.2s" begin="2.25s"  repeatCount="indefinite"/></circle>
+          <circle cx="38" cy="38" r="3.2" fill="#00FF88"><animate attributeName="opacity" values="1;0.35;1" dur="3.2s" begin="2.7s"   repeatCount="indefinite"/></circle>
+        </g>
+      </svg>
+      <span class="brand-name">Chaai<em>Labs</em></span>
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#usecases">Use Cases</a></li>
+      <li><a href="#ecosystem">Ecosystem</a></li>
+      <li><a href="#features">Capabilities</a></li>
+      <li><a href="#team">Team</a></li>
+    </ul>
+
+    <a href="/docs/" class="nav-btn">
+      Documentation →
+    </a>
+  </div>
+</nav>
+
+<!-- ── Hero ───────────────────────────────────────────────────────────────── -->
+<section id="hero">
+  <canvas id="canvas"></canvas>
+  <div class="container hero-inner">
+    <div class="hero-pill">Now Training · NVIDIA H100</div>
+    <h1 class="hero-h1">
+      The AI<br>
+      for <span class="g-text">Scientific HPC</span>
+    </h1>
+    <p class="hero-sub">
+      Chaai Labs builds agentic AI and validated workflow infrastructure for
+      computational materials science, running natively on HPC clusters.
+    </p>
+    <div class="hero-btns">
+      <a href="/docs/" class="btn-a">
+        Read the Documentation &nbsp;→
+      </a>
+      <a href="#about" class="btn-b">Learn More</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── Stats ──────────────────────────────────────────────────────────────── -->
+<section id="stats">
+  <div class="container">
+    <div class="stats-row">
+      <div class="stat r">
+        <div class="stat-n" data-to="4200">0</div>
+        <div class="stat-l">Real Simulation Examples</div>
+      </div>
+      <div class="stat r d1">
+        <div class="stat-n" data-to="800">0</div>
+        <div class="stat-l">Synthetic Training Trajectories</div>
+      </div>
+      <div class="stat r d2">
+        <div class="stat-n" data-to="32">0</div>
+        <div class="stat-l">Billion Parameter Base Model</div>
+      </div>
+      <div class="stat r d3">
+        <div class="stat-n" data-to="3">0</div>
+        <div class="stat-l">Training Domains</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Use Cases ───────────────────────────────────────────────────────────── -->
+<section id="usecases">
+  <div class="container">
+    <div class="uc-head">
+      <div class="tag r">Use Cases</div>
+      <h2 class="section-h r">One platform.<br><span class="g-text">Three scientific frontiers.</span></h2>
+    </div>
+
+    <!-- ── Hub-and-spoke illustration ──────────────────────────── -->
+    <div class="uc-diagram r">
+      <svg viewBox="0 0 920 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <!-- Glow filters -->
+          <filter id="glow-c" x="-60%" y="-60%" width="220%" height="220%">
+            <feGaussianBlur stdDeviation="10" result="b"/>
+            <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <filter id="glow-m" x="-60%" y="-60%" width="220%" height="220%">
+            <feGaussianBlur stdDeviation="8" result="b"/>
+            <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <filter id="glow-s" x="-40%" y="-40%" width="180%" height="180%">
+            <feGaussianBlur stdDeviation="4" result="b"/>
+            <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <!-- Path IDs for animateMotion -->
+          <path id="pm" d="M460,192 L460,132"/>
+          <path id="pb" d="M388,297 L212,382"/>
+          <path id="pd" d="M512,297 L706,382"/>
+        </defs>
+
+        <!-- Subtle background radial -->
+        <radialGradient id="bg-grd" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#00FF88" stop-opacity="0.04"/>
+          <stop offset="100%" stop-color="#00FF88" stop-opacity="0"/>
+        </radialGradient>
+        <ellipse cx="460" cy="250" rx="380" ry="230" fill="url(#bg-grd)"/>
+
+        <!-- ── Connection beams ────────────────── -->
+        <!-- To Materials -->
+        <line x1="460" y1="192" x2="460" y2="132"
+              stroke="#00FF88" stroke-width="1.5"
+              stroke-dasharray="6 4"
+              style="animation: beam-flow 1.4s linear infinite;"/>
+        <line x1="460" y1="192" x2="460" y2="132"
+              stroke="#00FF88" stroke-width="4" opacity="0.06"/>
+
+        <!-- To Bio -->
+        <line x1="388" y1="297" x2="212" y2="382"
+              stroke="#00D4FF" stroke-width="1.5"
+              stroke-dasharray="6 4"
+              style="animation: beam-flow 1.7s linear infinite;"/>
+        <line x1="388" y1="297" x2="212" y2="382"
+              stroke="#00D4FF" stroke-width="4" opacity="0.06"/>
+
+        <!-- To Pharma -->
+        <line x1="512" y1="297" x2="706" y2="382"
+              stroke="#FF6B9D" stroke-width="1.5"
+              stroke-dasharray="6 4"
+              style="animation: beam-flow 1.6s linear infinite 0.3s;"/>
+        <line x1="512" y1="297" x2="706" y2="382"
+              stroke="#FF6B9D" stroke-width="4" opacity="0.06"/>
+
+        <!-- Moving particles on beams -->
+        <circle r="4" fill="#00FF88" filter="url(#glow-s)">
+          <animateMotion dur="1.4s" repeatCount="indefinite" keyTimes="0;1" keySplines="0.4 0 0.6 1" calcMode="spline">
+            <mpath href="#pm"/>
+          </animateMotion>
+        </circle>
+        <circle r="3" fill="#00FF88" opacity="0.6">
+          <animateMotion dur="1.4s" begin="0.5s" repeatCount="indefinite">
+            <mpath href="#pm"/>
+          </animateMotion>
+        </circle>
+
+        <circle r="4" fill="#00D4FF" filter="url(#glow-s)">
+          <animateMotion dur="1.7s" repeatCount="indefinite">
+            <mpath href="#pb"/>
+          </animateMotion>
+        </circle>
+        <circle r="3" fill="#00D4FF" opacity="0.6">
+          <animateMotion dur="1.7s" begin="0.7s" repeatCount="indefinite">
+            <mpath href="#pb"/>
+          </animateMotion>
+        </circle>
+
+        <circle r="4" fill="#FF6B9D" filter="url(#glow-s)">
+          <animateMotion dur="1.6s" repeatCount="indefinite">
+            <mpath href="#pd"/>
+          </animateMotion>
+        </circle>
+        <circle r="3" fill="#FF6B9D" opacity="0.6">
+          <animateMotion dur="1.6s" begin="0.6s" repeatCount="indefinite">
+            <mpath href="#pd"/>
+          </animateMotion>
+        </circle>
+
+        <!-- ── Center Hub — Chaai Labs ─────────── -->
+        <!-- Outer pulse rings -->
+        <circle cx="460" cy="250" r="105" stroke="#00FF88" stroke-width="0.5" opacity="0.1">
+          <animate attributeName="r" values="98;112;98" dur="3s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.12;0.04;0.12" dur="3s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="460" cy="250" r="88" stroke="#00FF88" stroke-width="0.8" opacity="0.15">
+          <animate attributeName="r" values="84;94;84" dur="2.4s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.18;0.06;0.18" dur="2.4s" repeatCount="indefinite"/>
+        </circle>
+        <!-- Main circle -->
+        <circle cx="460" cy="250" r="72" fill="#0A0E1A" stroke="#00FF88" stroke-width="1.8" filter="url(#glow-c)"/>
+        <circle cx="460" cy="250" r="72" fill="rgba(0,255,136,0.05)"/>
+        <!-- Node-network logo (C-shape) inside center -->
+        <g transform="translate(432,224)">
+          <g stroke="#00FF88" stroke-width="1" opacity="0.45">
+            <line x1="28" y1="3"  x2="17" y2="2"/>
+            <line x1="17" y1="2"  x2="7"  y2="8"/>
+            <line x1="7"  y1="8"  x2="4"  y2="16"/>
+            <line x1="4"  y1="16" x2="7"  y2="24"/>
+            <line x1="7"  y1="24" x2="17" y2="29"/>
+            <line x1="17" y1="29" x2="28" y2="28"/>
+            <line x1="28" y1="3"  x2="7"  y2="8"/>
+            <line x1="17" y1="2"  x2="4"  y2="16"/>
+            <line x1="7"  y1="8"  x2="7"  y2="24"/>
+            <line x1="4"  y1="16" x2="17" y2="29"/>
+          </g>
+          <g filter="url(#glow-s)">
+            <circle cx="28" cy="3"  r="2.2" fill="#00FF88"/>
+            <circle cx="17" cy="2"  r="2"   fill="#00FF88"/>
+            <circle cx="7"  cy="8"  r="2"   fill="#00FF88"/>
+            <circle cx="4"  cy="16" r="2.5" fill="#00FF88"/>
+            <circle cx="7"  cy="24" r="2"   fill="#00FF88"/>
+            <circle cx="17" cy="29" r="2"   fill="#00FF88"/>
+            <circle cx="28" cy="28" r="2.2" fill="#00FF88"/>
+          </g>
+        </g>
+        <!-- "Chaai Labs" text -->
+        <text x="460" y="268" text-anchor="middle"
+              font-family="Inter,sans-serif" font-size="22" font-weight="800"
+              letter-spacing="0.5" fill="#E8F4FD">CHAAI</text>
+        <text x="460" y="280" text-anchor="middle"
+              font-family="Inter,sans-serif" font-size="18" font-weight="300"
+              letter-spacing="2" fill="#00FF88">LABS</text>
+
+        <!-- ── Materials Node (top) ────────────── -->
+        <circle cx="460" cy="82" r="54" fill="#0A0E1A" stroke="#00FF88" stroke-width="1.4" filter="url(#glow-m)"/>
+        <circle cx="460" cy="82" r="54" fill="rgba(0,255,136,0.04)"/>
+        <text x="460" y="70" text-anchor="middle" font-size="48">⚛️</text>
+        <text x="460" y="92" text-anchor="middle"
+              font-family="Inter,sans-serif" font-size="14" font-weight="700"
+              fill="#00FF88" letter-spacing="0.3">MATERIALS</text>
+        <text x="460" y="103" text-anchor="middle"
+              font-family="Inter,sans-serif" font-size="15" font-weight="400"
+              fill="#6B8CAE">SCIENCE</text>
+        <!-- Satellite tool labels -->
+        <text x="330" y="38" font-family="Inter,sans-serif" font-size="15" fill="#6B8CAE" text-anchor="middle">VASP · LAMMPS</text>
+        <text x="590" y="38" font-family="Inter,sans-serif" font-size="15" fill="#6B8CAE" text-anchor="middle">DeepMD · MACE</text>
+        <text x="330" y="118" font-family="Inter,sans-serif" font-size="15" fill="#6B8CAE" text-anchor="middle">pymatgen · ASE</text>
+        <text x="590" y="118" font-family="Inter,sans-serif" font-size="15" fill="#6B8CAE" text-anchor="middle">ALCHEMI · phonopy</text>
+
+        <!-- ── Bio Node (bottom-left) ──────────── -->
+        <circle cx="160" cy="410" r="54" fill="#0A0E1A" stroke="#00D4FF" stroke-width="1.4" filter="url(#glow-m)"/>
+        <circle cx="160" cy="410" r="54" fill="rgba(0,212,255,0.04)"/>
+        <text x="160" y="400" text-anchor="middle" font-size="48">🧬</text>
+        <text x="160" y="420" text-anchor="middle"
+              font-family="Inter,sans-serif" font-size="14" font-weight="700"
+              fill="#00D4FF" letter-spacing="0.3">BIOLOGICAL</text>
+        <text x="160" y="431" text-anchor="middle"
+              font-family="Inter,sans-serif" font-size="15" font-weight="400"
+              fill="#6B8CAE">MOLECULES</text>
+        <!-- Satellite labels -->
+        <text x="58"  y="358" font-family="Inter,sans-serif" font-size="15" fill="#6B8CAE" text-anchor="middle">GROMACS · NAMD</text>
+        <text x="55"  y="462" font-family="Inter,sans-serif" font-size="15" fill="#6B8CAE" text-anchor="middle">AlphaFold2 · VMD</text>
+        <text x="220" y="480" font-family="Inter,sans-serif" font-size="15" fill="#6B8CAE" text-anchor="middle">MDAnalysis · OpenMM</text>
+
+        <!-- ── Pharma Node (bottom-right) ─────── -->
+        <circle cx="760" cy="410" r="54" fill="#0A0E1A" stroke="#FF6B9D" stroke-width="1.4" filter="url(#glow-m)"/>
+        <circle cx="760" cy="410" r="54" fill="rgba(255,107,157,0.04)"/>
+        <text x="760" y="400" text-anchor="middle" font-size="48">💊</text>
+        <text x="760" y="420" text-anchor="middle"
+              font-family="Inter,sans-serif" font-size="14" font-weight="700"
+              fill="#FF6B9D" letter-spacing="0.3">PHARMA &amp;</text>
+        <text x="760" y="431" text-anchor="middle"
+              font-family="Inter,sans-serif" font-size="15" font-weight="400"
+              fill="#6B8CAE">DRUG DESIGN</text>
+        <!-- Satellite labels -->
+        <text x="862" y="358" font-family="Inter,sans-serif" font-size="15" fill="#6B8CAE" text-anchor="middle">AutoDock · RDKit</text>
+        <text x="865" y="462" font-family="Inter,sans-serif" font-size="15" fill="#6B8CAE" text-anchor="middle">DeepChem · FEP+</text>
+        <text x="698" y="480" font-family="Inter,sans-serif" font-size="15" fill="#6B8CAE" text-anchor="middle">Schrödinger · OpenBabel</text>
+      </svg>
+    </div>
+
+    <!-- ── Domain detail cards ──────────────────────────────────── -->
+    <div class="uc-cards">
+
+      <!-- Materials -->
+      <div class="uc-card mat r">
+        <span class="uc-ico">⚛️</span>
+        <div class="uc-title">Materials Science</div>
+        <div class="uc-desc">
+          Accelerate discovery of next-generation materials — from battery electrolytes
+          and heterogeneous catalysts to semiconductors and structural alloys. Chaai
+          reasons across DFT, classical MD, and ML force fields simultaneously,
+          closing the loop from atomistic simulation to property prediction.
+        </div>
+        <ul class="uc-list">
+          <li>Train and benchmark ML force fields (DeepMD, MACE) via ALCHEMI workflows</li>
+          <li>Automate VASP convergence checks, INCAR tuning, and OUTCAR parsing</li>
+          <li>Compute phonon dispersions, thermal conductivity, and defect formation energies</li>
+          <li>Generate and analyze phase diagrams with pymatgen and ASE</li>
+          <li>Run temperature-dependent LAMMPS MD scans and extract transport properties</li>
+        </ul>
+        <hr class="uc-sep">
+        <div class="uc-tools-lbl">Key Tools</div>
+        <div class="uc-tools">
+          <span class="uc-tool">VASP</span><span class="uc-tool">LAMMPS</span>
+          <span class="uc-tool">DeepMD</span><span class="uc-tool">MACE</span>
+          <span class="uc-tool">ALCHEMI</span><span class="uc-tool">pymatgen</span>
+          <span class="uc-tool">ASE</span><span class="uc-tool">phonopy</span>
+          <span class="uc-tool">NequIP</span><span class="uc-tool">CHGNet</span>
+        </div>
+        <div class="uc-terminal">
+          <span class="prompt">chaai›</span> Compare DeepMD vs MACE for NVO cathode<br>
+          <span style="color:#2D4060">→ Running ALCHEMI benchmark at 300K/1000K...</span><br>
+          <span style="color:#2D4060">→ MACE RMSE: 42 meV/Å · DeepMD: 68 meV/Å</span>
+        </div>
+      </div>
+
+      <!-- Bio -->
+      <div class="uc-card bio r d1">
+        <span class="uc-ico">🧬</span>
+        <div class="uc-title">Biological Molecules</div>
+        <div class="uc-desc">
+          From protein folding and membrane dynamics to enzyme catalysis and
+          nucleic acid interactions. Chaai handles the full MD pipeline — system
+          setup, force field parameterization, long production runs, trajectory
+          analysis, and free energy calculations across all major bio-simulation codes.
+        </div>
+        <ul class="uc-list">
+          <li>Build and solvate GROMACS / AMBER systems from PDB structures</li>
+          <li>Compute free energy differences with FEP, MBAR, and thermodynamic integration</li>
+          <li>Analyze protein dynamics: RMSF, RMSD, PCA, contact maps, hydrogen bonds</li>
+          <li>Run QM/MM simulations for enzyme active site modeling with NAMD + ORCA</li>
+          <li>Predict structures with AlphaFold2 and ESMFold, then validate with MD</li>
+        </ul>
+        <hr class="uc-sep">
+        <div class="uc-tools-lbl">Key Tools</div>
+        <div class="uc-tools">
+          <span class="uc-tool">GROMACS</span><span class="uc-tool">NAMD</span>
+          <span class="uc-tool">AMBER</span><span class="uc-tool">OpenMM</span>
+          <span class="uc-tool">AlphaFold2</span><span class="uc-tool">MDAnalysis</span>
+          <span class="uc-tool">VMD</span><span class="uc-tool">CHARMM</span>
+          <span class="uc-tool">ESMFold</span><span class="uc-tool">ProDy</span>
+        </div>
+        <div class="uc-terminal">
+          <span class="prompt">chaai›</span> Set up spike protein MD in GROMACS<br>
+          <span style="color:#2D4060">→ Solvating in TIP3P · 150 mM NaCl...</span><br>
+          <span style="color:#2D4060">→ Submitting 500 ns NPT run to SLURM</span>
+        </div>
+      </div>
+
+      <!-- Pharma -->
+      <div class="uc-card drug r d2">
+        <span class="uc-ico">💊</span>
+        <div class="uc-title">Pharma &amp; Drug Design</div>
+        <div class="uc-desc">
+          Compress the drug discovery pipeline with AI-guided virtual screening,
+          binding affinity prediction, and lead optimization. Chaai orchestrates
+          large docking campaigns, interprets ADMET profiles, and integrates deep
+          learning models directly into HPC workflows — at any scale.
+        </div>
+        <ul class="uc-list">
+          <li>Screen millions of compounds with AutoDock Vina or Glide via SLURM array jobs</li>
+          <li>Compute relative and absolute binding free energies (RBFE / ABFE) with FEP+</li>
+          <li>Predict ADMET properties (solubility, BBB permeability, toxicity) with DeepChem</li>
+          <li>Generate QSAR models and interpret SAR from large compound libraries</li>
+          <li>Fragment-based design and scaffold hopping with RDKit + generative AI</li>
+        </ul>
+        <hr class="uc-sep">
+        <div class="uc-tools-lbl">Key Tools</div>
+        <div class="uc-tools">
+          <span class="uc-tool">AutoDock Vina</span><span class="uc-tool">RDKit</span>
+          <span class="uc-tool">DeepChem</span><span class="uc-tool">OpenBabel</span>
+          <span class="uc-tool">Schrödinger</span><span class="uc-tool">FEP+</span>
+          <span class="uc-tool">PyMOL</span><span class="uc-tool">BioPython</span>
+          <span class="uc-tool">GOLD</span><span class="uc-tool">CPPTRAJ</span>
+        </div>
+        <div class="uc-terminal">
+          <span class="prompt">chaai›</span> Screen 50k compounds vs ACE2 receptor<br>
+          <span style="color:#2D4060">→ Launching SLURM array: 500 × 100 ligands...</span><br>
+          <span style="color:#2D4060">→ Top hit: ΔG = -10.4 kcal/mol · docking pose saved</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── About ──────────────────────────────────────────────────────────────── -->
+<section id="about">
+  <div class="container">
+    <div>
+      <div class="tag r">About Chaai Labs</div>
+      <h2 class="section-h r">HPC-native AI,<br>built for scientists</h2>
+      <p class="body-text r">
+        Chaai (Computational HPC Agentic AI) is a working research prototype that
+        brings large language model reasoning directly to scientific computing.
+        Unlike general-purpose AI assistants, Chaai is trained on
+        <em>real</em> simulation workflows — not generic web text.
+      </p>
+      <p class="body-text r">
+        The strongest demonstrated capabilities cover computational materials,
+        atomistic simulation, MLIP workflows, scientific analysis, and scheduler
+        operations. Biomolecular and pharmaceutical integrations remain experimental
+        and are not presented as validated production workflows.
+      </p>
+    </div>
+
+    <div class="r">
+      <div class="pipeline">
+        <div class="p-row">
+          <div class="p-badge">A</div>
+          <div>
+            <div class="p-name">Real HPC Workflows</div>
+            <div class="p-detail">VASP · LAMMPS · GROMACS · DeepMD · MACE · ASE · 4,200+ real examples</div>
+          </div>
+        </div>
+        <div class="p-row">
+          <div class="p-badge">B</div>
+          <div>
+            <div class="p-name">Nemotron Synthesis — Domain B</div>
+            <div class="p-detail">MSD, RDF, ALCHEMI benchmarks, diffusion coefficients, plotting</div>
+          </div>
+        </div>
+        <div class="p-row">
+          <div class="p-badge">C</div>
+          <div>
+            <div class="p-name">Nemotron Synthesis — Domain C</div>
+            <div class="p-detail">Slurm jobs, module systems, file management, HPC operations</div>
+          </div>
+        </div>
+        <div class="p-row">
+          <div class="p-badge">▲</div>
+          <div>
+            <div class="p-name">Experimental Verification Pipeline</div>
+            <div class="p-detail">VASP/LAMMPS/DeepMD sanity checks → chosen/rejected alignment pairs</div>
+          </div>
+        </div>
+        <div class="p-row">
+          <div class="p-badge">★</div>
+          <div>
+            <div class="p-name">Chaai — Qwen2.5-Coder-32B</div>
+            <div class="p-detail">QLoRA adapter trained on NVIDIA H100 · alignment work remains experimental</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Ecosystem ──────────────────────────────────────────────────────────── -->
+<section id="ecosystem">
+  <div class="container">
+    <div class="eco-head">
+      <div class="tag r">Full Ecosystem Support</div>
+      <h2 class="section-h r">Every tool in your stack,<br>understood natively</h2>
+    </div>
+    <div class="eco-grid">
+
+      <div class="eco-cat r">
+        <div class="eco-cat-title">Ab Initio &amp; DFT</div>
+        <div class="eco-tags">
+          <span class="eco-tag hi">VASP</span>
+          <span class="eco-tag hi">Quantum ESPRESSO</span>
+          <span class="eco-tag">CP2K</span>
+          <span class="eco-tag">ABINIT</span>
+          <span class="eco-tag">GPAW</span>
+          <span class="eco-tag">NWChem</span>
+          <span class="eco-tag">ORCA</span>
+          <span class="eco-tag hi">Gaussian</span>
+        </div>
+      </div>
+
+      <div class="eco-cat r d1">
+        <div class="eco-cat-title">Molecular Dynamics</div>
+        <div class="eco-tags">
+          <span class="eco-tag hi">LAMMPS</span>
+          <span class="eco-tag hi">GROMACS</span>
+          <span class="eco-tag hi">ALCHEMI</span>
+          <span class="eco-tag">NAMD</span>
+          <span class="eco-tag hi">OpenMM</span>
+          <span class="eco-tag">AMBER</span>
+          <span class="eco-tag">CHARMM</span>
+          <span class="eco-tag">CPMD</span>
+        </div>
+      </div>
+
+      <div class="eco-cat r d2">
+        <div class="eco-cat-title">ML Force Fields (MLIPs)</div>
+        <div class="eco-tags">
+          <span class="eco-tag hi">DeepMD-kit</span>
+          <span class="eco-tag hi">MACE</span>
+          <span class="eco-tag hi">AimNet2</span>
+          <span class="eco-tag hi">MatPES</span>
+          <span class="eco-tag hi">NequIP</span>
+          <span class="eco-tag">CHGNet</span>
+          <span class="eco-tag">M3GNet</span>
+          <span class="eco-tag">Allegro</span>
+          <span class="eco-tag">FLARE</span>
+          <span class="eco-tag">ACE</span>
+          <span class="eco-tag">GAP</span>
+          <span class="eco-tag">ANI</span>
+        </div>
+      </div>
+
+      <div class="eco-cat r d1">
+        <div class="eco-cat-title">Benchmarking</div>
+        <div class="eco-tags">
+          <span class="eco-tag hi">ALCHEMI</span>
+          <span class="eco-tag">JARVIS-Tools</span>
+          <span class="eco-tag hi">MatBench</span>
+          <span class="eco-tag">AiiDA</span>
+          <span class="eco-tag">Atomate2</span>
+        </div>
+      </div>
+
+      <div class="eco-cat r d2">
+        <div class="eco-cat-title">Analysis &amp; Python</div>
+        <div class="eco-tags">
+          <span class="eco-tag hi">ASE</span>
+          <span class="eco-tag hi">pymatgen</span>
+          <span class="eco-tag hi">MDAnalysis</span>
+          <span class="eco-tag hi">MDTraj</span>
+          <span class="eco-tag hi">NumPy</span>
+          <span class="eco-tag hi">SciPy</span>
+          <span class="eco-tag hi">pandas</span>
+          <span class="eco-tag hi">h5py</span>
+          <span class="eco-tag hi">phonopy</span>
+        </div>
+      </div>
+
+      <div class="eco-cat r d3">
+        <div class="eco-cat-title">Plotting &amp; Visualization</div>
+        <div class="eco-tags">
+          <span class="eco-tag hi">matplotlib</span>
+          <span class="eco-tag hi">Plotly</span>
+          <span class="eco-tag">seaborn</span>
+          <span class="eco-tag hi">OVITO</span>
+          <span class="eco-tag hi">VESTA</span>
+          <span class="eco-tag hi">VMD</span>
+          <span class="eco-tag">py3Dmol</span>
+          <span class="eco-tag hi">ase.visualize</span>
+        </div>
+      </div>
+
+      <div class="eco-cat r d2">
+        <div class="eco-cat-title">HPC &amp; Workflow</div>
+        <div class="eco-tags">
+          <span class="eco-tag hi">SLURM</span>
+          <span class="eco-tag">PBS/Torque</span>
+          <span class="eco-tag hi">MPI</span>
+          <span class="eco-tag hi">CUDA</span>
+          <span class="eco-tag hi">CUDA Python</span>
+          <span class="eco-tag">OpenMP</span>
+          <span class="eco-tag">Singularity</span>
+          <span class="eco-tag hi">Conda</span>
+          <span class="eco-tag">Snakemake</span>
+          <span class="eco-tag">Nextflow</span>
+        </div>
+      </div>
+
+      <div class="eco-cat r d3">
+        <div class="eco-cat-title">Structure &amp; Thermodynamics</div>
+        <div class="eco-tags">
+          <span class="eco-tag hi">pymatgen</span>
+          <span class="eco-tag">spglib</span>
+          <span class="eco-tag hi">phonopy</span>
+          <span class="eco-tag">phono3py</span>
+          <span class="eco-tag">seekpath</span>
+          <span class="eco-tag">sumo</span>
+          <span class="eco-tag hi">vaspkit</span>
+        </div>
+      </div>
+
+      <div class="eco-cat r d3">
+        <div class="eco-cat-title">Structural Biology</div>
+        <div class="eco-tags">
+          <span class="eco-tag hi">AlphaFold2</span>
+          <span class="eco-tag">ESMFold</span>
+          <span class="eco-tag">RoseTTAFold</span>
+          <span class="eco-tag">MODELLER</span>
+          <span class="eco-tag">PyMOL</span>
+          <span class="eco-tag">UCSF ChimeraX</span>
+          <span class="eco-tag">ProDy</span>
+          <span class="eco-tag">BioPython</span>
+        </div>
+      </div>
+
+      <div class="eco-cat r d4">
+        <div class="eco-cat-title">Drug Discovery</div>
+        <div class="eco-tags">
+          <span class="eco-tag hi">AutoDock Vina</span>
+          <span class="eco-tag hi">RDKit</span>
+          <span class="eco-tag hi">DeepChem</span>
+          <span class="eco-tag">OpenBabel</span>
+          <span class="eco-tag">Schrödinger</span>
+          <span class="eco-tag">GOLD</span>
+          <span class="eco-tag">Glide</span>
+          <span class="eco-tag">FEP+</span>
+          <span class="eco-tag">CPPTRAJ</span>
+        </div>
+      </div>
+
+      <div class="eco-cat r d4">
+        <div class="eco-cat-title">AI &amp; Training Stack</div>
+        <div class="eco-tags">
+          <span class="eco-tag hi">NVIDIA Nemotron</span>
+          <span class="eco-tag hi">NeMo Curator</span>
+          <span class="eco-tag">PyTorch</span>
+          <span class="eco-tag">Hugging Face</span>
+          <span class="eco-tag hi">PEFT / LoRA</span>
+          <span class="eco-tag">TRL / DPO</span>
+          <span class="eco-tag hi">vLLM</span>
+          <span class="eco-tag">bitsandbytes</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── Features ───────────────────────────────────────────────────────────── -->
+<section id="features">
+  <div class="container">
+    <div class="sec-head">
+      <div class="tag r">Capabilities</div>
+      <h2 class="section-h r">Everything your<br>simulation workflow needs</h2>
+    </div>
+    <div class="feat-grid">
+      <div class="feat-card r">
+        <div class="feat-ico">⚡</div>
+        <div class="feat-h">HPC-Native Intelligence</div>
+        <div class="feat-p">Understands SLURM, PBS, module systems, job queues, and cluster constraints. Submit, monitor, and debug jobs conversationally.</div>
+      </div>
+      <div class="feat-card r d1">
+        <div class="feat-ico">🔬</div>
+        <div class="feat-h">Simulation Expertise</div>
+        <div class="feat-p">Deep knowledge of VASP, LAMMPS, DeepMD, and MACE. Reads OUTCAR files, interprets convergence curves, tunes INCAR parameters.</div>
+      </div>
+      <div class="feat-card r d2">
+        <div class="feat-ico">🧠</div>
+        <div class="feat-h">MLIP Benchmarking</div>
+        <div class="feat-p">Automates DeepMD vs MACE-MPA-0 comparison via ALCHEMI workflows. Quantitative force field evaluation for your material system.</div>
+      </div>
+      <div class="feat-card r d3">
+        <div class="feat-ico">📊</div>
+        <div class="feat-h">Scientific Analysis</div>
+        <div class="feat-p">Computes MSD, RDF, diffusion coefficients, ionic conductivities. Generates publication-ready plots from raw MD trajectories.</div>
+      </div>
+      <div class="feat-card r d4">
+        <div class="feat-ico">🔗</div>
+        <div class="feat-h">Tool-Call Architecture</div>
+        <div class="feat-p">Trained in OpenAI function-calling format. Chains read_file, run_command, and python_exec in multi-step reasoning loops.</div>
+      </div>
+      <div class="feat-card r d5">
+        <div class="feat-ico">🔄</div>
+        <div class="feat-h">Continuously Learning</div>
+        <div class="feat-p">Experimental data curation and evaluation pipelines support model adaptation; they do not guarantee correctness or eliminate hallucinations.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── How It Works ───────────────────────────────────────────────────────── -->
+<section id="hiw">
+  <div class="container">
+    <div class="hiw-head">
+      <div class="tag r">How It Works</div>
+      <h2 class="section-h r">From raw HPC data<br>to an aligned AI agent</h2>
+    </div>
+    <div class="hiw-row">
+      <div class="hiw-step r">
+        <div class="hiw-num">01</div>
+        <div class="hiw-h">Collect &amp; Synthesize</div>
+        <div class="hiw-p">Crawls real simulation directories for VASP, LAMMPS, and DeepMD workflows. NVIDIA Nemotron generates 800+ expert synthetic trajectories.</div>
+        <div class="hiw-code"><span class="dim">$</span> python collect_simulation_workflows.py<br><span class="dim">    --roots /hpc/simulations</span><br><span class="dim">→</span> 4,247 examples collected</div>
+      </div>
+      <div class="hiw-step r d2">
+        <div class="hiw-num">02</div>
+        <div class="hiw-h">Filter &amp; Verify</div>
+        <div class="hiw-p">NeMo Curator removes low-quality examples. Physics verifier checks VASP/LAMMPS/DeepMD outputs against known bounds and builds DPO pairs.</div>
+        <div class="hiw-code"><span class="dim">$</span> python verify_trajectories.py<br><span class="dim">→</span> chosen:   1,840 examples<br><span class="dim">→</span> rejected:   160 examples</div>
+      </div>
+      <div class="hiw-step r d4">
+        <div class="hiw-num">03</div>
+        <div class="hiw-h">Train &amp; Deploy</div>
+        <div class="hiw-p">QLoRA SFT on Qwen2.5-Coder-32B, then DPO alignment on an NVIDIA H100. Lightweight LoRA adapter — no full model retraining required.</div>
+        <div class="hiw-code"><span class="dim">$</span> torchrun train_qwen.py<br><span class="dim">    --model Qwen2.5-Coder-32B</span><br><span class="dim">    --lora-r 64 --epochs 3</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Technology ─────────────────────────────────────────────────────────── -->
+<section id="tech">
+  <div class="container">
+    <div class="sec-head">
+      <div class="tag r">Technology</div>
+      <h2 class="section-h r">Built on the best</h2>
+    </div>
+    <div class="tech-row">
+      <div class="tech-card r">
+        <div class="tech-ico">🤖</div>
+        <div class="tech-n">Qwen2.5-Coder-32B</div>
+        <div class="tech-r">Base Model</div>
+      </div>
+      <div class="tech-card r d1">
+        <div class="tech-ico">⚡</div>
+        <div class="tech-n">NVIDIA Nemotron</div>
+        <div class="tech-r">Data Synthesis</div>
+      </div>
+      <div class="tech-card r d2">
+        <div class="tech-ico">🔍</div>
+        <div class="tech-n">NeMo Curator</div>
+        <div class="tech-r">Data Quality</div>
+      </div>
+      <div class="tech-card r d3">
+        <div class="tech-ico">🎯</div>
+        <div class="tech-n">TRL + PEFT</div>
+        <div class="tech-r">QLoRA + DPO Training</div>
+      </div>
+      <div class="tech-card r d4">
+        <div class="tech-ico">🖥️</div>
+        <div class="tech-n">NVIDIA H100</div>
+        <div class="tech-r">Training Hardware</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Team ───────────────────────────────────────────────────────────────── -->
+<section id="team">
+  <div class="container">
+    <div class="team-head">
+      <div class="tag r">Team</div>
+    </div>
+    <div class="team-row">
+      <div class="team-card r">
+        <div class="team-av">C</div>
+        <div class="team-n">Chaai Labs</div>
+        <div class="team-r">Founder</div>
+        <div class="team-bio">
+          A team of computational scientists and AI engineers building the next
+          generation of intelligent tools for high-performance scientific computing,
+          powered by NVIDIA hardware and open-source AI.
+        </div>
+        <div class="team-socials">
+          <a href="https://linkedin.com/company/chaailabs" class="team-s" title="LinkedIn" target="_blank" rel="noopener">in</a>
+          <a href="https://github.com/chaailabs" class="team-s" title="GitHub" target="_blank" rel="noopener">gh</a>
+          <a href="mailto:chaaifoundation@gmail.com" class="team-s" title="Email">@</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ────────────────────────────────────────────────────────────────── -->
+<section id="cta">
+  <div class="container">
+    <h2 class="r"><span class="g-text">Join the mission.</span></h2>
+    <p class="r">
+      Explore the public architecture, safety model, validated workflow concepts,
+      and development roadmap.
+    </p>
+    <div class="cta-btns">
+      <a href="/docs/" class="btn-a r">
+        Read the Documentation &nbsp;→
+      </a>
+      <a href="https://linkedin.com/company/chaailabs" class="btn-b r d1" target="_blank" rel="noopener">
+        Follow on LinkedIn
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ── Footer ─────────────────────────────────────────────────────────────── -->
+<footer>
+  <div class="container foot-wrap">
+    <a href="#" class="foot-brand">
+      <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <filter id="fg"><feGaussianBlur stdDeviation="1.2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+          <filter id="fg2"><feGaussianBlur stdDeviation="2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        </defs>
+        <g stroke="#00FF88" stroke-width="1.8" opacity="0.55">
+          <line x1="38" y1="6" x2="24" y2="4"/><line x1="24" y1="4" x2="11" y2="12"/>
+          <line x1="11" y1="12" x2="6" y2="22"/><line x1="6" y1="22" x2="11" y2="32"/>
+          <line x1="11" y1="32" x2="24" y2="40"/><line x1="24" y1="40" x2="38" y2="38"/>
+        </g>
+        <g stroke="#00FF88" stroke-width="0.6" opacity="0.15">
+          <line x1="38" y1="6" x2="11" y2="12"/><line x1="24" y1="4" x2="6" y2="22"/>
+          <line x1="11" y1="12" x2="11" y2="32"/><line x1="6" y1="22" x2="24" y2="40"/>
+        </g>
+        <path id="fsp" d="M38,6 L24,4 L11,12 L6,22 L11,32 L24,40 L38,38" fill="none"/>
+        <circle r="1.8" fill="#00FF88" filter="url(#fg2)">
+          <animateMotion dur="2.6s" repeatCount="indefinite"><mpath href="#fsp"/></animateMotion>
+          <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.06;0.88;1" dur="2.6s" repeatCount="indefinite"/>
+        </circle>
+        <g filter="url(#fg)">
+          <circle cx="38" cy="6"  r="3"   fill="#00FF88"><animate attributeName="opacity" values="1;0.35;1" dur="3.2s" begin="0s"   repeatCount="indefinite"/></circle>
+          <circle cx="24" cy="4"  r="2.6" fill="#00FF88"><animate attributeName="opacity" values="1;0.35;1" dur="3.2s" begin="0.45s" repeatCount="indefinite"/></circle>
+          <circle cx="11" cy="12" r="2.6" fill="#00FF88"><animate attributeName="opacity" values="1;0.35;1" dur="3.2s" begin="0.9s"  repeatCount="indefinite"/></circle>
+          <circle cx="6"  cy="22" r="3.2" fill="#00FF88"><animate attributeName="r" values="3.2;4.2;3.2" dur="2.2s" repeatCount="indefinite"/></circle>
+          <circle cx="11" cy="32" r="2.6" fill="#00FF88"><animate attributeName="opacity" values="1;0.35;1" dur="3.2s" begin="1.8s"  repeatCount="indefinite"/></circle>
+          <circle cx="24" cy="40" r="2.6" fill="#00FF88"><animate attributeName="opacity" values="1;0.35;1" dur="3.2s" begin="2.25s" repeatCount="indefinite"/></circle>
+          <circle cx="38" cy="38" r="3"   fill="#00FF88"><animate attributeName="opacity" values="1;0.35;1" dur="3.2s" begin="2.7s"  repeatCount="indefinite"/></circle>
+        </g>
+      </svg>
+      <span class="foot-name">Chaai<em>Labs</em></span>
+    </a>
+    <span class="foot-copy">© 2026 Chaai Labs · Open source, built for science.</span>
+    <div class="foot-links">
+      <a href="https://github.com/chaailabs" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://linkedin.com/company/chaailabs" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="mailto:chaaifoundation@gmail.com">Contact</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ── Navbar scroll effect ──────────────────────────────────────────────────── */
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => nav.classList.toggle('pinned', scrollY > 50), {passive:true});
+
+/* ── Hero canvas — particle network ───────────────────────────────────────── */
+const cvs = document.getElementById('canvas');
+const cx  = cvs.getContext('2d');
+let W, H, pts = [];
+const N = 72, D = 145;
+
+const resize = () => {
+  W = cvs.width  = window.innerWidth;
+  H = cvs.height = window.innerHeight;
+};
+resize();
+window.addEventListener('resize', resize, {passive:true});
+
+class Pt {
+  constructor() {
+    this.x  = Math.random() * W;
+    this.y  = Math.random() * H;
+    this.vx = (Math.random() - .5) * .38;
+    this.vy = (Math.random() - .5) * .38;
+    this.r  = Math.random() * 1.4 + .7;
+    this.a  = Math.random() * .5 + .25;
+    this.ph = Math.random() * Math.PI * 2;
+  }
+  tick() {
+    this.x += this.vx; this.y += this.vy; this.ph += .018;
+    if (this.x < 0 || this.x > W) this.vx *= -1;
+    if (this.y < 0 || this.y > H) this.vy *= -1;
+  }
+  draw() {
+    const a = this.a + Math.sin(this.ph) * .12;
+    cx.beginPath();
+    cx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+    cx.fillStyle = `rgba(0,255,136,${a})`;
+    cx.fill();
+  }
+}
+
+for (let i = 0; i < N; i++) pts.push(new Pt());
+
+function frame() {
+  cx.clearRect(0, 0, W, H);
+
+  // Soft ambient glow
+  const g = cx.createRadialGradient(W*.28, H*.5, 0, W*.28, H*.5, W*.55);
+  g.addColorStop(0, 'rgba(0,255,136,.025)');
+  g.addColorStop(1, 'transparent');
+  cx.fillStyle = g;
+  cx.fillRect(0, 0, W, H);
+
+  // Connections
+  for (let i = 0; i < N; i++) {
+    for (let j = i + 1; j < N; j++) {
+      const dx = pts[i].x - pts[j].x, dy = pts[i].y - pts[j].y;
+      const d  = Math.hypot(dx, dy);
+      if (d < D) {
+        const a = (1 - d / D) * .22;
+        cx.beginPath();
+        cx.moveTo(pts[i].x, pts[i].y);
+        cx.lineTo(pts[j].x, pts[j].y);
+        cx.strokeStyle = d / D < .5
+          ? `rgba(0,255,136,${a})`
+          : `rgba(0,212,255,${a * .55})`;
+        cx.lineWidth = .75;
+        cx.stroke();
+      }
+    }
+  }
+  pts.forEach(p => { p.tick(); p.draw(); });
+  requestAnimationFrame(frame);
+}
+frame();
+
+/* ── Scroll reveal ─────────────────────────────────────────────────────────── */
+const ro = new IntersectionObserver(es => {
+  es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('on'); ro.unobserve(e.target); } });
+}, {threshold: .1});
+document.querySelectorAll('.r').forEach(el => ro.observe(el));
+
+/* ── Counter animation ─────────────────────────────────────────────────────── */
+function counter(el, target, ms = 1800) {
+  const t0 = performance.now();
+  const tick = now => {
+    const p = Math.min((now - t0) / ms, 1);
+    const e = 1 - Math.pow(1 - p, 3);
+    el.textContent = Math.floor(e * target).toLocaleString();
+    if (p < 1) requestAnimationFrame(tick);
+    else el.textContent = target.toLocaleString() + '+';
+  };
+  requestAnimationFrame(tick);
+}
+const co = new IntersectionObserver(es => {
+  es.forEach(e => {
+    if (e.isIntersecting) {
+      counter(e.target, +e.target.dataset.to);
+      co.unobserve(e.target);
+    }
+  });
+}, {threshold: .6});
+document.querySelectorAll('[data-to]').forEach(el => co.observe(el));
+</script>
+</body>
+</html>
