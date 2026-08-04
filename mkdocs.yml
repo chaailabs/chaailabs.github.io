@@ -20,7 +20,17 @@ theme:
       scheme: default
       primary: black
       accent: green
-  features: [navigation.instant, navigation.sections, navigation.tabs, navigation.top, content.code.copy, search.highlight, search.suggest]
+  features: [navigation.instant, navigation.instant.progress, navigation.sections, navigation.tabs, navigation.tabs.sticky, navigation.top, navigation.footer, content.code.copy, content.code.annotate, search.highlight, search.suggest, toc.follow]
+extra_css:
+  - assets/stylesheets/chaai.css
+extra_javascript:
+  - assets/javascripts/mathjax.js
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/chaailabs
+      name: Chaai Labs on GitHub
 plugins: [search]
 markdown_extensions:
   - admonition
@@ -30,6 +40,8 @@ markdown_extensions:
   - toc:
       permalink: true
   - pymdownx.details
+  - pymdownx.arithmatex:
+      generic: true
   - pymdownx.highlight
   - pymdownx.superfences:
       custom_fences:
@@ -37,7 +49,8 @@ markdown_extensions:
           class: mermaid
           format: !!python/name:pymdownx.superfences.fence_code_format
 nav:
-  - Home: index.md
+  - Chaai Labs ↗: https://chaailabs.github.io/
+  - Documentation: index.md
   - Getting started:
       - Overview: getting-started/overview.md
       - First workflow: getting-started/first-workflow.md
@@ -51,6 +64,8 @@ nav:
       - Overview: hpca/index.md
       - Architecture: hpca/architecture.md
       - Workflow stages: hpca/workflow-stages.md
+      - Handler reference: hpca/handlers.md
+      - Analysis and mathematics: hpca/analysis-and-mathematics.md
       - State and recovery: hpca/state-and-recovery.md
       - Provenance: hpca/provenance.md
   - Workflows:
@@ -64,5 +79,4 @@ nav:
       - Documentation policy: development/documentation-policy.md
       - Testing and releases: development/testing-and-releases.md
       - Security: development/security.md
-copyright: Copyright &copy; 2026 Chaai Labs
-
+copyright: Copyright &copy; 2026 <a href="https://chaailabs.github.io/">Chaai Labs</a>
