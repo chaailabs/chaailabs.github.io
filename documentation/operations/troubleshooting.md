@@ -64,3 +64,11 @@ Before accepting transport results, verify:
 - CSV data and plots agree.
 
 See [Analysis and mathematics](../hpca/analysis-and-mathematics.md) for equations and the complete acceptance matrix.
+
+<div class="chaai-contact">
+  <div>
+    <h2>Still need help?</h2>
+    <p>Include the handler name, observed state, expected outcome, and a sanitized error summary.</p>
+  </div>
+  <a class="chaai-contact__button" href="mailto:selvaus10@gmail.com?subject=HPCA%20support%20request">Request help</a>
+</div>
