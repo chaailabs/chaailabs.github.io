@@ -45,7 +45,7 @@ Long-running simulation campaigns fail in ordinary ways: queues interrupt jobs, 
 ## Execution lifecycle
 
 ```mermaid
-flowchart LR
+flowchart TB
   A[Validated specification] --> B[Plan stages]
   B --> C[Submit to scheduler]
   C --> D[Reconcile state]

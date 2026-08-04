@@ -1,7 +1,7 @@
 # HPCA architecture
 
 ```mermaid
-flowchart LR
+flowchart TB
   Y[project specification] --> G[schema gate]
   G --> O[orchestrator]
   O --> D[dependency graph]
@@ -13,4 +13,3 @@ flowchart LR
 ```
 
 Core invariants are configuration-driven site behavior, explicit stage dependencies, idempotent completion checks, durable state, scheduler reconciliation, immutable provenance records, and no advancement past a failed validation gate.
-

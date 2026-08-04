@@ -3,7 +3,7 @@
 HPCA represents a study as a dependency graph of handlers. A handler owns a bounded scientific or operational responsibility and declares its prerequisites, readiness conditions, outputs, and completion test.
 
 ```mermaid
-flowchart LR
+flowchart TB
   D[Design] --> Q[DFT]
   Q --> A[AIMD]
   Q --> N[NEB]
