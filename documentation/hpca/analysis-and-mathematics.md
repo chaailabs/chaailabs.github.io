@@ -186,11 +186,3 @@ The frequency grid depends on velocity sampling. Report windowing, zero padding,
 
 !!! warning "Scientific validation remains a human responsibility"
     A completed handler means its computational contract passed. It does not establish convergence with system size, trajectory duration, electronic-structure choices, force-field fidelity, or experiment.
-
-<div class="chaai-contact">
-  <div>
-    <h2>Scientific or mathematical feedback?</h2>
-    <p>Report an equation, assumption, validation criterion, or analysis method that needs review.</p>
-  </div>
-  <a class="chaai-contact__button" href="mailto:selvaus10@gmail.com?subject=HPCA%20analysis%20and%20mathematics%20feedback">Contact Selva</a>
-</div>

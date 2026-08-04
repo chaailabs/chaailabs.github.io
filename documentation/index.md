@@ -76,11 +76,3 @@ flowchart TB
 | Inspect traceability guarantees | [HPCA provenance](hpca/provenance.md) |
 | Diagnose a stuck or failed run | [Troubleshooting](operations/troubleshooting.md) |
 | Understand generated analysis data | [Analysis output reference](reference/analysis-outputs.md) |
-
-<div class="chaai-contact">
-  <div>
-    <h2>Questions or documentation feedback?</h2>
-    <p>Report unclear guidance, request information, or suggest a scientific workflow improvement.</p>
-  </div>
-  <a class="chaai-contact__button" href="mailto:selvaus10@gmail.com?subject=Chaai%20Labs%20documentation%20feedback">Email Selva</a>
-</div>
