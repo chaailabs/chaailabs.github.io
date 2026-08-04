@@ -53,19 +53,49 @@
 .md-typeset h1 { margin-bottom: 1rem; }
 .md-typeset code { border: 1px solid rgba(127, 151, 177, 0.16); }
 .md-typeset .mermaid {
+  position: relative;
   margin: 1.5rem 0;
-  padding: 1rem;
+  padding: 1.4rem;
   overflow-x: auto;
   background: rgba(13, 18, 32, 0.58);
   border: 1px solid rgba(0, 255, 136, 0.12);
   border-radius: 0.8rem;
   text-align: center;
+  scrollbar-color: var(--chaai-green) rgba(136, 164, 191, 0.12);
 }
-.md-typeset .mermaid svg { min-width: 720px; max-width: 100%; height: auto; }
+.md-typeset .mermaid::before {
+  content: "Scrollable diagram";
+  display: block;
+  margin-bottom: 0.7rem;
+  color: var(--chaai-muted);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-align: left;
+  text-transform: uppercase;
+}
+.md-typeset .mermaid svg {
+  width: auto !important;
+  min-width: 980px;
+  max-width: none !important;
+  height: auto;
+}
 .md-typeset .mermaid .nodeLabel,
 .md-typeset .mermaid .edgeLabel {
-  font-size: 17px !important;
-  font-weight: 700 !important;
+  font-size: 21px !important;
+  font-weight: 800 !important;
+  line-height: 1.35 !important;
+}
+.md-typeset .mermaid .nodeLabel p,
+.md-typeset .mermaid .label text,
+.md-typeset .mermaid text {
+  font-size: 21px !important;
+  font-weight: 800 !important;
+  line-height: 1.35 !important;
+}
+.md-typeset .mermaid .edgeLabel p {
+  font-size: 18px !important;
+  font-weight: 750 !important;
 }
 .md-typeset .mermaid .edgeLabel { color: var(--chaai-text) !important; }
 .md-typeset .MathJax { overflow-x: auto; overflow-y: hidden; }
@@ -170,7 +200,8 @@
   .chaai-section-hero { padding: 2rem 1.25rem; border-radius: 0.8rem; }
   .chaai-hero h1,
   .chaai-section-hero h1 { font-size: 2.25rem; }
-  .md-typeset .mermaid svg { min-width: 620px; }
+  .md-typeset .mermaid { margin-inline: -0.5rem; padding: 1rem; }
+  .md-typeset .mermaid svg { min-width: 900px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

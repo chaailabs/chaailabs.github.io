@@ -71,8 +71,12 @@ nav:
   - Workflows:
       - Battery materials: workflows/battery-materials.md
       - MLIP lifecycle: workflows/mlip-lifecycle.md
+  - Operations:
+      - Observability: operations/observability.md
+      - Troubleshooting: operations/troubleshooting.md
   - Reference:
       - Project specification: reference/project-specification.md
+      - Analysis outputs: reference/analysis-outputs.md
       - Scientific formulas: reference/scientific-formulas.md
       - Terminology: reference/terminology.md
   - Development:
