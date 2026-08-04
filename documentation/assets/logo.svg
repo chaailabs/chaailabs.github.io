@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 60" width="320" height="60">
+  <defs>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="1.8" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glow-soft" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="1" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- Icon: C-node-network in 60x60 area -->
+  <!-- Nodes: N0(52,5) N1(34,3) N2(14,12) N3(7,30) N4(14,48) N5(34,56) N6(52,54) -->
+
+  <!-- Outer spine lines -->
+  <g stroke="#00FF88" stroke-width="1.2" opacity="0.4" filter="url(#glow-soft)">
+    <line x1="52" y1="5"  x2="34" y2="3"/>
+    <line x1="34" y1="3"  x2="14" y2="12"/>
+    <line x1="14" y1="12" x2="7"  y2="30"/>
+    <line x1="7"  y1="30" x2="14" y2="48"/>
+    <line x1="14" y1="48" x2="34" y2="56"/>
+    <line x1="34" y1="56" x2="52" y2="54"/>
+  </g>
+  <!-- Cross-links -->
+  <g stroke="#00FF88" stroke-width="0.8" opacity="0.15" filter="url(#glow-soft)">
+    <line x1="52" y1="5"  x2="14" y2="12"/>
+    <line x1="34" y1="3"  x2="7"  y2="30"/>
+    <line x1="14" y1="12" x2="14" y2="48"/>
+    <line x1="7"  y1="30" x2="34" y2="56"/>
+    <line x1="14" y1="48" x2="52" y2="54"/>
+  </g>
+  <!-- Nodes -->
+  <g filter="url(#glow)">
+    <circle cx="52" cy="5"  r="3.5" fill="#00FF88"/>
+    <circle cx="34" cy="3"  r="3"   fill="#00FF88"/>
+    <circle cx="14" cy="12" r="3"   fill="#00FF88"/>
+    <circle cx="7"  cy="30" r="4"   fill="#00FF88"/>
+    <circle cx="14" cy="48" r="3"   fill="#00FF88"/>
+    <circle cx="34" cy="56" r="3"   fill="#00FF88"/>
+    <circle cx="52" cy="54" r="3.5" fill="#00FF88"/>
+  </g>
+
+  <!-- Wordmark -->
+  <text x="72" y="38"
+    font-family="'Inter', 'Helvetica Neue', Arial, sans-serif"
+    font-size="30"
+    font-weight="800"
+    letter-spacing="-1"
+    fill="#E8F4FD">Chaai</text>
+  <text x="158" y="38"
+    font-family="'Inter', 'Helvetica Neue', Arial, sans-serif"
+    font-size="30"
+    font-weight="300"
+    letter-spacing="-0.5"
+    fill="#00FF88"> Labs</text>
+</svg>

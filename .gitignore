@@ -1,0 +1,7 @@
+/.venv/
+/_site/
+/build/
+/.cache/
+__pycache__/
+*.py[cod]
+
